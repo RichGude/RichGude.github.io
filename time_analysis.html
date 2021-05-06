@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!--Basic header tags to establish character sets and Browser use-->
+  <meta charset='UTF-8'>
+  <meta http-equiv='X-UA-Compatible' content="IE=edge">
+  <meta name="description" content="HTML page for analyzing common metal prices from 1990 through 2021">
+  <meta name="author" content="Rich Gude:  Bootstrap HTM/CSS Contributions from: Mark Otto, Jacob Thornton, and Bootstrap contributors">
+  <!--Define FavIcon: freely sourced from: https://www.websiteplanet.com/webtools/favicon-generator/ -->
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon.png">
+  <!--Header tag for proper rending and touch zooming on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <!--Header links for Bootstrap page elements-->
+  <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/carousel/">
+  <!-- Bootstrap core CSS -->
+  <link href="assets/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Custom core CSS -->
+  <link href="time_analysis.css" rel="stylesheet">
+
+  <!--Establish the Title of the Page: required for HTML and shown in the Browser Toolbar-->
+  <title>Time Series Analysis</title>
+
+  <!-- For loading AMChart info -->
+  <script src="https://cdn.amcharts.com/lib/4/core.js"></script>
+  <script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
+  <script src="https://cdn.amcharts.com/lib/4/maps.js"></script>
+  <script src="https://cdn.amcharts.com/lib/4/themes/dataviz.js"></script>
+  <script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
+
+  <!-- For Equation Display -->
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async
+          src="https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/tex-mml-chtml.js">
+  </script>
+
+</head>
+<body>
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="index.html">Project Overview</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+  
+      <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav me-auto mb-2 mb-md-0">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="background.html" id="dropdown01" data-bs-toggle="dropdown" aria-expanded="false">Commodities Background</a>
+            <ul class="dropdown-menu" aria-labelledby="dropdown01">
+              <li><a class="dropdown-item" href="background.html">Metal Commodities</a></li>
+              <li><a class="dropdown-item" href="background.html#BackOutput">Global Output</a></li>
+              <li><a class="dropdown-item" href="background.html#BackPrice">Commodity Price</a></li>
+            </ul>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link active dropdown-toggle" href="time_analysis.html" id="dropdown01" data-bs-toggle="dropdown" aria-expanded="false">Time Analysis</a>
+            <ul class="dropdown-menu" aria-labelledby="dropdown01">
+              <li><a class="dropdown-item" href="time_analysis.html">Executive Summary</a></li>
+              <li><a class="dropdown-item" href="time_analysis.html#TimeReal">Real Price</a></li>
+              <li><a class="dropdown-item" href="time_analysis.html#TimeStationary">Data Stationary</a></li>
+              <li><a class="dropdown-item" href="time_analysis.html#TimeARIMA">ARIMA Modeling</a></li>
+              <li><a class="dropdown-item" href="time_analysis.html#TimeSummary">Metal Model Summaries</a></li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="machineLearn.html">Machine Learning</a>
+          </li>
+        </ul>
+        <form class="d-flex">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+      </div>
+    </div>
+  </nav>
+  
+  <main>
+  
+
+  <div class="container-fluid" style='margin:0'>
+    <div class="row headerBack justify-content-center">
+      <div class="col-12">
+        <h1>Autoregressive Analysis:</h1>
+      </div><!-- /.col-lg-12 -->
+    </div><!-- /.row -->
+  </div><!-- /.container-fluid-->
+
+  <!-- Create Executive Summary -->
+  <div class="container executive">
+    <div class="row">
+      <div class="col-12">
+        <h2>Time Analysis Executive Summary</h2>
+        <p>
+          <b>Autoregressive, Integrated, Moving Average (ARIMA) time-series models</b> are a single-variable (i.e., time) model utilizing the autocorrelated trend of data for forecasting a time-linked value.  
+          In this section, the real price (i.e., inflation-adjusted price) for five commodities, <b>aluminum</b>, <b>copper</b>, <b>iron ore</b>, <b>nickel</b>, and <b>zinc</b>, are individually evaluated and fit with
+          an ARIMA time-series model, using an analysis of autocorrelation function values and comparing the Akaike information criterion (AIC) between prospective models.  The order and derived function of the best
+          model for each metal are displayed in the table below, along with the Mean Sum Square of the Residuals (MSSR) of the model. </p>
+          <table class="styled-table">
+            <thead>
+              <tr>
+                <th>Metal</th>
+                <th>ARIMA Order</th>
+                <th>Equation</th>
+                <th>Mean Square Sum of Residuals</th>
+              </tr>
+            </thead>
+            <tbody>
+                <tr>
+                  <td>Aluminum</td>
+                  <td>(0,1,1)</td>
+                  <td>\(Price_{M + 1} = Price_{M} + 0.259 * \epsilon_{M} - 1.515\)</td>
+                  <td>43,880</td>
+                </tr>
+                <tr>
+                  <td>Copper</td>
+                  <td>(1,1,0)</td>
+                  <td>\(Price_{M + 1} = Price_{M} + 0.320 * (Price_{M} - Price_{M-1}) + 1.827\)</td>
+                  <td>607,800</td>
+                </tr>
+                <tr>
+                  <td>Iron Ore</td>
+                  <td>(0,1,1)</td>
+                  <td>\(Price_{M + 1} = Price_{M} + 0.261 * \epsilon_{M} + 0.0666\)</td>
+                  <td>459.7</td>
+                </tr>
+                <tr>
+                  <td>Nickel</td>
+                  <td>(1,1,0)</td>
+                  <td>\(Price_{M + 1} = Price_{M} + 0.372 * (Price_{M} - Price_{M-1}) - 1.520\)</td>
+                  <td>8,816,000</td>
+                </tr>
+                <tr>
+                  <td>Zinc</td>
+                  <td>(0,1,1)</td>
+                  <td>\(Price_{M + 1} = Price_{M} + 0.364 * \epsilon_{M} - 0.0978\)</td>
+                  <td>107,400</td>
+                </tr>
+            </tbody>
+          </table>
+        <p>Based on a visual evaluation of forecasted versus actual commodity prices, <b>ARIMA models are found to be less effective at modeling the large data variance in commodity prices</b>, resulting in a poor fit 
+          of the modeled data to the actual data; additionally, while some commodity data may show a slight trend over time (i.e., the price either marginially increasing or decreasing month over month), these trends, 
+          contained in the ARIMA model constant value, were <b>not found</b> to be significantly different from zero, meaning ARIMA modeling for each commodity found no statistically clear trend in the price data, resulting 
+          in a model for each commodity that was only marginally improved from a <b>random walk model</b> for price forecasting. <br><br>
+          
+          The MSSR of the best ARIMA model for each metal will be compared to the best derived machine learning model in the next section in order to evaluate the efficacy of a more robust machine learning 
+          model utilizing more economic variables and time-delayed variable evaluation. </p>
+      </div><!-- /.col-12 -->
+    </div><!-- /.row -->
+  </div><!-- /.container executive -->
+
+  <div class="container">
+    <div class="row" id='TimeReal'>
+      <div class="col-lg-12">
+        <p>The following page discusses and visualizes the process and outcomes for <b>Autoregressive, Integreated, Moving Average (ARIMA)</b> models developed for forecasting pricing of each metal commodity,
+           <b>Aluminum</b>, <b>Copper</b>, <b>Iron</b>, <b>Nickel</b>, and <b>Zinc</b>: <br> </p>
+        <h2>Converting to Constant-1990 ("Real") Dollars:</h2>
+        <p>
+          <b>Inflation</b> is the natural growth of prices over time, reflecting a decline in the natural purchasing power of circulating currency via different natural pathways, such as as additional currency 
+          bills being generated by the origin country's central bank or bonds issued by the origin country's government creating a higher demand for a given amount of production.  Increasing the stock of circulating 
+          currency, either directly as physical bills or indirectly by credit, tends to push prices in all sectors of an economy higher.  This <i>quantitative</i> effect on the price of commodities may be separate from the 
+          <i>qualitative</i> effect of inflation; for instance, during periods of high inflation, investors may move financial assets away from monetary savings, such as government bonds, to property or material savings, 
+          thus doubly increasing the price of certain commodities such as gold and silver, or vice versa during periods of low inflation or deflation. The quantitative effect of price inflation is semi-formally measured 
+          by the <b>Consumer Price Index (CPI)</b>, which measures the price changes of a specific group of consumer goods and assumes all other goods and services prices track with the same growth.<br><br>
+
+          As detailed in the <a href="background.html">Commodities Background Section</a> of this report, monthly commodity price data in United States dollars (US$) for five metal commodities, aluminum, copper, iron 
+          ore, nickel, and zinc, from 1990 to 2021 are recorded by the International Monetary Fund, and distributed in a downloadable, accessible capacity by the Federal Reserve Bank of St. Louis, Economic Research 
+          Division.  This price data is collected monthly and amended in no other way; namely, it is not adjusted for seasonal changes in price or year-over-year inflation changes. <br><br>
+
+          For the purposes of isolating the specific qualitative effects of inflation on the demand, reflected in the price, of commodities vice the quantitative proportional effects on the price itself 
+          (discussed in greater detail in the <a href="machineLearn.html">Machine Learning Section</a> of this report), commodity prices will be adjusted to constant United States dollars (US$) at the origin date of the 
+          commodity price values, January, 1990. Converting to January 1990-constant US$ values is done by dividing the current-date (MMYY) price by the ratio of the CPI from the current date 
+          (\(CPI_{MMYY}\)) and January, 1990 (\(CPI_{0190}\)), detailed in the equation below:
+        </p>
+      </div><!-- /.col-lg-12 -->
+    </div><!-- /.row -->
+    <div class='row'> <!-- Equation Row -->
+      <div class="d-flex justify-content-center">
+          <p>\[Price_{0190} = Price_{MMYY} * {CPI_{0190} \over CPI_{MMYY}}.\]</p>
+      </div><!-- /.col-lg-12 -->
+    </div><!-- /.row -->
+    <div class="row">
+      <div class="col-lg-12">
+        <p>Constant dollar values used for comparisons through time are often referred to as the <b>real</b> values (e.g., 'Real' Gross Domestic Product.). <br><br>
+          
+          The Consumer Price Index from January 1990 to January 2021 is presented below, and the effect it has on the price of metal commodities over time (current-year price in faded, dashed lines, and real 
+          prices in stark, solid lines) are presented in the infographics below:</p>
+        </div>
+        <div class="col-12 noteBlock">
+          <p><b>Utilizing the infographic:</b> The CPI graph is principally designed to show that CPI trends almost always steadily upwards, except in relatively rare and extreme economic downturns, such as the 
+          precipitous drop in the CPI seen in the graph around the 2008 Financial Downturn.  This steady upward trend means the <i>real</i> price trends below the current day price, and year over year, the 
+          price difference between current day and real becomes greater.</p>
+        </div><!-- /.col-lg-12 -->
+      <div class="col-lg-12">
+        <div id="cpi_div" style="height: 200px"></div>
+        <div id="price_div" style="height: 500px"></div>
+      </div><!-- /.col-lg-12 -->
+    </div><!-- /.row -->
+  </div><!-- /.container -->
+
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <p><b>As can be seen in the price infographic above</b>, the role of inflation on pricing, commodity or otherwise, is quite significant over time: the current-year price of nickel (US$ per metric ton) in January, 
+          2021 is $17,863, but the inflation-adjusted, 1990-equivalent price is $8685; that's a drop in value of roughly half of the current-year price (51.4%).  Most importantly for modeling and analysis purposes, this 
+          percentage drop in value is consistent across all analyzed metal commodities and, for that reason, not significant for understanding the variable effects of inflation on certain commodities or in certain time periods.  
+          For all future model building and analyses, the 1990-equivalent prices, henceforth referred to as the <b>"real"</b> prices in economic terms, of each commodity will be used.  <br><br>
+
+          Except for iron ore, the real price of each commodity is seen to be relatively stable: the final three-month-average (from December 2020 to February 2021) of each commodity price compared to its beginning
+          three-month-average starting in January 1990 for <i>nickel</i> and <i>zinc</i> changed by less than 10% of their starting values (+6.12% and -8.24%, respectively) and <i>copper</i> and <i>aluminum</i> were 
+          also only moderately affected (+52.0% and -36.0% changes, respectively).  This reflects research into the volatility of commodity prices by the 
+          <a href="https://www.spglobal.com/spdji/en/documents/research/research-rethinking-commodities.pdf?force_download=true">S&amp;P Dow Jones Indicies research</a> that commodity prices tend to vary only moderately over
+          time.  In this way, commodity data is relatively <b>stationary</b>.
+      </p>
+      </div><!-- /.col-lg-12 -->
+    </div><!-- /.row -->
+
+    <div class="row" id='TimeStationary'>
+      <div class="col-12">
+        <h2>Stationarity of Data:</h2>
+        <p>One of the assumptions of time-series modeling is that the data to be modeled be <b>stationary</b>.  Stationary data consists of data that has a constant mean and variance of the time period under training
+          and forecast.  Confirming the stationarity of data may be performed visually, then, by verifying that average value about which the data is spread (<i>mean</i>) or the magnitude of the spread of the data 
+          (<i>variance</i>) does not grow or shrink with respect to time; however, a more rigourous test, the <b>Augmented Dickey-Fuller (ADF) test</b>, can be used to empirically confirm the stationary nature of modeled data.
+
+          The ADF test is a statistical test and, as such, has a null and alternative hypothesis and a probability value associated with its confidence.  The null hypothesis (H<sub>0</sub>) for the ADF test is the time-series
+          data has a unit root, meaning it is non-stationary, and, so, the alternative ADF hypothesis is the time-series data <i>does not</i> have a unit root, meaning it is stationary.  Accordingly, any data set with a
+          probability value, <i>p</i>, less than 0.05 (corresponding to a 95% standard confidence interval) for the ADF test will reject the null hypothesis, accepting the alternative that the data <b>will be considered 
+          stationary</b> and suitable for ARIMA modeling.
+      </p>
+      </div><!-- /.col-12 -->
+
+      <div class="row">
+        <div class="col-lg-8 col-6">
+          <h3>ADF Test of Price Data:</h3>
+          <p>The Augmented Dickey-Fuller test is performed on the <b>real commodites prices</b> within Python, and the probability results are shown in the radar chart to the right: <br><br>
+            The ADF test results show a high confidence (greater than 95%) that the real monthly prices for <b>aluminum</b>, <b>nickel</b>, and <b>zinc</b> from Jauary, 1990 to January, 2021 <b>are stationary</b>  (i.e., 
+            the null hypothesis is rejected with a suitably low probability value); however, the high p-value (greater than 0.05) fails to reject the null hypothesis for <b>copper</b> and <b>iron ore</b>, so these data sets
+            should be considered <b>not stationary</b> and are not currently, suitably structured for time-series modeling.  Where data to be forecasted is not already stationary, it becomes necessary to augment the data
+            such that it is; this can be done by taking the first difference of the data (or second-difference and greater if each is also found to not be stationary).
+          </p>
+        </div><!-- /.col-lg-8 col-6 -->
+        <div class="col-lg-4 col-6">
+          <h4>ADF Test P-Values for Metal Prices</h4>
+          <div id="zero_dif_div" style="height: 250px"></div>
+        </div><!-- /.col-lg-4 col-6 -->
+      </div><!-- /.row -->
+
+      <div class="row">
+        <div class="col-12">
+          <h2>First-Difference Commodity Price Values</h2>
+          <p>
+            For the purposes of finding a stationary set of price data with which to build appropriate time-series models, the <b>first-difference values</b> (i.e., the difference in real price values from month to month) are
+            calculated and shown for February 1990 to January 2021 below.  Except for large, but fleeting volatility in nickel prices during the mid-2000s, all of the commodity price series visually appear to
+            have a relatively constant mean and variance (i.e., are stationary) throughout the three decades under review.  ADF Testing will be used to confirm this.
+          </p>
+        </div><!-- /.col-12 -->
+          <div id="diff_line_div" style="height: 400px"></div>
+        </div><!-- /.col-12 -->
+        <div class="col-lg-8 col-6">
+          <h3>ADT Test of First-Difference Price Data:</h3>
+          <p>The Augmented Dickey-Fuller test is performed on the <b>first-difference, real commodites prices</b> within Python, and the probability results are shown in the radar chart to the right: <br><br>
+            The ADF test results show an exceptionally high confidence (greater than 99.99%) that the first-difference real monthly prices for <b>all metal commodites</b> (aluminum, copper, iron ore, nickel, and zinc) 
+            <b>are stationary</b>  (i.e., the null hypothesis is rejected with a suitably low probability value).  With this confirmation, the first-difference, real price data is suitable for time series, <b>Autoregressive, 
+            Integrated, Moving Average (ARIMA)</b> modeling.
+          </p>
+        </div><!-- /.col-lg-8 col-6 -->
+        <div class="col-lg-4 col-6">
+          <h4>ADF Test P-Values for First-Diff Prices</h4>
+          <div id="first_dif_div" style="height: 250px"></div>
+        </div><!-- /.col-lg-4 col-6 -->
+
+        <div class="col-12" id='TimeARIMA'>
+          <h2>ARIMA Model Components and Variable Determination:</h2>
+          <p>
+            <b>Autoregressive, Integrated, Moving Average (ARIMA)</b> models, as their name suggests, have three principal model components, the autoregressive, integrated, and moving average components, each with an
+            associated order and number of coefficients equal to the their order.  In this way, ARIMA models are often expressed as ARIMA(<i>P</i>, <i>Q</i>, <i>D</i>) models, with the <b>P</b> value referring to the 
+            autoregressive order of the model, the <b>Q</b> value referring to the integrated order of the model, and the <b>D</b> value referring to the moving average order of the model. The general equation for an 
+            ARIMA model where (D=1) is:
+          </p>
+        </div><!-- /.col-12 -->
+        <div class="d-flex justify-content-center">
+          <p style='font-size: 20px;'><b>\[(Y_{t}-Y_{t-1}) - \alpha_{1}(Y_{t-1}-Y_{t-2}) - ... - \alpha_{P}(Y_{t-P}-Y_{t-(P+1)}) = C_{t} + \epsilon_{t} + \beta_{1}\epsilon_{t-1} + ... + \beta_{Q}\epsilon_{t-Q}\]</b></p>
+        </div><!-- /.col-lg-12 -->
+        <div class="col-12">
+          <p>
+            With stationary data that was formed from the first-difference of the time-series price data, the first variable for each metal commodity is already determined: the <b>Integrated</b> component of the ARIMA 
+            model corresponds to the initial difference order of the data; since the first difference value for each commodity is used for model building, the <b>Q value</b> for each commodity ARIMA model is <b>equal 
+            to 1</b>, that is, for each commodity, the ARIMA model is an <b>ARIMA(P,1,D)</b> model, where P and D and their associated coefficients (\(\alpha_{n}\) and \(\beta_{n}\) coefficients) are
+            determined separately for each commodity.  The determination of the <b>ALUMINUM</b> ARIMA model is detailed below (all other models are determined in the same way, but performed separately and reported below):
+          </p>
+        </div><!-- /.col-12 -->
+
+        <!-- NEW HEADER for introducing AUTOCORRELATION -->
+        <div class="col-12">
+          <h3>Autocorrelation and Partial Autocorrelation for Determining First Differencing:</h3>
+          <p>
+            <b>Autocorrelation</b> is the correlation that a value has with a time-delayed copy of itself.  This relationship is represented as positive or negative coefficient just as any correlation, and the coefficient 
+            for each lag (or order of time delay) is determined from the autocorrelation function.  That is to say for a given single series of data (e.g., aluminum price data), the effect that a value from one time step 
+            previous (a lag of 1) has on the current value is given by the autocorrelation function value at lag = 1.  This contrasts only slightly with the <b>partial autocorrelation</b>, which is similar in all ways but
+            one: the partial autocorrelation controls for the effect of lower-order lags on the effect of higher order. For illustration and discussion of the difference, the autocorrelation and partial autocorrelation 
+            function values of the real aluminum prices (not differenced) for 12 months (maximum lag = 12) are presented below:
+          </p>
+        </div><!-- /.col-12 -->
+
+        <div class="col-lg-6 col-12">
+          <h4 style="color:rgba(211, 97, 97, 1)">Autocorrelation Values for Real Aluminum Prices</h4>
+          <div id="zeroACF_div"></div>
+        </div><!-- /.col-6 -->
+        <div class="col-lg-6 col-12">
+          <h4 style="color:rgba(97, 108, 211, 1)">Partial Autocorrelation Values for Real Aluminum Prices</h4>
+          <div id="zeroPACF_div"></div>
+        </div><!-- /.col-6 -->
+
+        <div class="col-12">
+          <p>
+            <b>From the first autocorrelation figure to the left,</b> there is a large autocorrelation effect on current-day aluminum prices from each month throughout the year; that is, the price of aluminum from month to month
+            is heavily dependent on the price of aluminum from each month of the year.  However, from the partial autocorrelation figure on the right showing only one significant value (generally speaking, greater than 0.2) at 
+            a lag of 1, the autocorrelation effect is shown principally to be propagating only from the first month.  In other words, the current-day price of aluminum is only heavily dependent on the price from the previous month, 
+            but because the price of the previous month is heavily dependent on the price of the month that came before that this effect echoes in the autocorrelation values, as seen in the left graph. <br><br>
+
+            The positive, significant (i.e., greater than 0.2) autocorrelation values out to a large value of lags further justifies the use of first differencing of the data; if first differencing were not used, the prices may
+            be represented by a first-order autoregressive function, ARIMA(1,0,0), but the coefficient ((\(\alpha_{1}\)) would be roughly equivalent to 1 (the value of the PACF value at a lag of 1) which would reduce the ARIMA 
+            model equation to \(Y_{t} - Y_{t-1} = \epsilon_{t}\), which is equivalent to an ARIMA(0,1,0) model.  The ARIMA(0,1,0) model is also known as a <b>random walk model</b> or if the difference between \(Y_{t}\) and 
+            \(Y_{t-1}\) is constant, a <b>random walk model with drift</b>.  <br><br>
+            
+            As will be shown in the ACF and PACF review of first-differenced real aluminum prices below, the aluminum model (and all commodity price models) are, effectively, random walk models.
+          </p>
+        </div><!-- /.col-12 -->
+
+        <!-- NEW HEADER for explaining AUTOCORRELATION -->
+        <div class="col-12">
+          <h3>Autocorrelation and Partial Autocorrelation for Determining ARIMA Order:</h3>
+          <p>
+            The autocorrelation and partial autocorrelation values of the first-differenced aluminum prices are presented in the graphs below:
+          </p>
+        </div><!-- /.col-12 -->
+
+        <div class="col-lg-6 col-12">
+          <h4 style="color:rgba(211, 97, 97, 1)">ACF Values for First-Differenced Aluminum Prices</h4>
+          <div id="firstACF_div"></div>
+        </div><!-- /.col-6 -->
+        <div class="col-lg-6 col-12">
+          <h4 style="color:rgba(97, 108, 211, 1)">PACF Values for First-Differenced Aluminum Prices</h4>
+          <div id="firstPACF_div"></div>
+        </div><!-- /.col-6 -->
+
+        <div class="col-12">
+          <p>
+            <b>After first differencing</b>, the significance of each time lag correlation shrinks dramatically.  Both the autocorrelation and partial autocorrelation function values only exceed a significant value (greater 
+            than 0.2 or less than -0.2) at a lag of 1, and then only marginally with ACF and PACF values of 0.243 and 0.244, respectively.  The associated P and Q orders for an ARIMA(P,D,Q) model generally equate to the largest 
+            significant ACF and PACF lag values, respectively.  Accordingly, an ARIMA model for real aluminum pricing <i>may</i> be an <b>ARIMA(1,1,1)</b>, where P=1 since the largest significant ACF lag is 1, and D=1 since the
+            largest significant PACF lag is 1); however, since both of these values are borderline significant, it may be necessary to contruct four separate models evaluating each mix of 0th or 1st-order autoregressive and 
+            moving average models: ARIMA(1,1,1), ARIMA(1,1,0), ARIMA(0,1,1), and ARIMA(0,1,0).  <b>Evaluating each model</b> will encompass comparing whether their coefficients of (\(\alpha\) and \(\beta\) are significant, via
+            a <b>two-tailed T-test</b> confirming the value is not equal to zero, and then, passing significance, if the model is superior to other significant models, via the <b>Akaike information criterion (AIC) value</b> 
+            for the model.  The AIC is a measure of the goodness-of-fit of the model for one-step-ahead prediction that disincentivizes using too many variables; the model with the smallest AIC value is considered best.
+          </p>
+        </div><!-- /.col-12 -->
+        
+        <!-- NEW HEADER for VALIDATING autocorrelation coefficients -->
+        <div class="col-12">
+          <h3>Testing and Validating Model Parameters and Coefficients:</h3>
+          <p>
+            For model testing purposes (splitting data into training and testing data), each ARIMA model is <b>trained on data from January, 1990 to July, 2018, or 342 training months,</b> leaving 30 testing months
+            from August, 2018 to January, 2021.  <i>The exception to this</i>: iron ore prices from 1990 through 2007 were very stable and small until a large upward swing in prices, followed by much more market volatility 
+            at a higher mean value; for this reason, iron ore price training <b>only covers 143 months</b> from January, 2008 to December, 2019 and testing only 13 months.  The ARIMA models evaluated below are built and 
+            validated in Python utilizing the <i>statsmodels.tsa</i> libraries.  <br><br>
+            
+            The 95% confidence interval for each \(\alpha\) and \(\beta\) coefficient, if present, and model constant value (corresponding to a random walk with drift if the constant is significantly non-zero) are presented 
+            along with the AIC of each model below:
+          </p>
+        </div><!-- /.col-12 -->
+
+        <div class="col-lg-7 col-12">
+          <h4 style="color:rgba(110, 211, 97, 1)">Model Coefficient Value Intervals</h4>
+          <div id="modCoeff_div"></div>
+        </div><!-- /.col-6 -->
+        <div class="col-lg-5 col-12">
+          <h4 style="color:rgba(97, 203, 211, 1)">Model AIC Values</h4>
+          <div id="modAIC_div"></div>
+        </div><!-- /.col-6 -->
+
+        <div class="col-12">
+          <p>
+            The autocorrelation data for the first-differenced real aluminum prices presupposed the best model as an ARIMA(1,1,1) model; however, from the AIC information presented above,
+            <b>the ARIMA(0,1,1) model</b> (i.e., a first-differenced model with one order of moving average smoothing) <b>had the smallest AIC, and thus, is the best model for time-series evaluation of real aluminum prices.</b>  
+            Evaluating the coefficients for the ARIMA(0,1,1) and other models, however, provides confounding evidence for this model and its position as the <i>'best'</i> model for price modeling: <br><br>
+            
+            Because their 95% confidence range encompasses the zero (0) value, the <b>alpha and beta terms</b> for the ARIMA(1,1,1) model and the <b>constant value</b> for each other model are shown to <b>not be significant</b>.  
+            That is to say, because the alpha and beta terms for the ARIMA(1,1,1) model, with an appropriate amount of confidence, may be zero, the ARIMA(1,1,1) is not statistically different from an ARIMA(0,1,0) model.  Coupling 
+            this information with the observations that the difference in AIC value between the most effective (ARIMA (0,1,1) AIC is 3790) and least effective (ARIMA(0,1,0) AIC is 3810) is <b>less than 1%</b> and the model constant 
+            value for each model is <b>not significant</b> (corresponding to a random walk model), there is very little statistical difference between the ARIMA(0,1,1) price model and a random walk model, and, <b>these models are, 
+            effectively, equivalent</b>.  This revelation is better illustrated in the following section.
+          </p>
+        </div><!-- /.col-12 -->
+
+        <!-- NEW HEADER for FINAL MODEL PRESENTATION AND DISCUSSION -->
+        <div class="col-12">
+          <h3>ARIMA(0,1,1) Model Prediction:</h3>
+          <p>
+            <b>The 1-step-ahead forecast from the ARIMA(0,1,1) model</b> for real aluminum prices is presented from March 1990 to July, 2018; each month shown thereafter is a H-step-ahead forecast, basically devolving after the first 
+            month to a simple random walk model with drift as the moving average term disappears.  These forecasts are shown against the aluminum real prices from the same period for comparison:
+          </p>
+        </div><!-- /.col-12 -->
+
+        <div class="col-12">
+          <h4>Forecast of Real Aluminum Prices: March, 2019 to January, 2021</h4>
+          <div id="forecast_div" style="height: 500px;"></div>
+        </div><!-- /.col-12 -->
+
+        <div class="col-12">
+          <p>
+            As can be seen in the price comparison graph above, <b>the ARIMA does a poor job of capturing the large variance in real aluminum price data</b>.  This observation is consistent with the large AIC and ARIMA model 
+            constant values identified above; specifically, the model constant values for each ARIMA model were shown to be <i>not significant</i> as well as potentially varying from ~10 to ~7 US$ per year.  This large variance in 
+            the potential true constant value can be understood visually in the price comparison chart: despite the fact that the model has a slight negative walk to the model (i.e., the real model price appears to 
+            be shrinking month over month), this trend might be neutralized or even reversed (i.e., to a slight positive walk) if a different starting date is chosen, such as the local price minimum in December, 1991 where the price 
+            over the entire period from there after may appear to be constant or slightly increasing.  This uncertainty in the overal trend in the data is reflected in a large and non-significant model constant interval.  As stated previously, 
+            <b>the aluminum price ARIMA model is essentially equivalent to a random walk model</b>; however for the purposes of best model forecasting and comparison, <b>the ARIMA(0,1,1), with a constant value of -1.515 and a beta value 
+            of 0.259</b> will be used as the base model for real aluminum prices.  This model, with the constant and beta values as described, takes the 1-Step-Ahead Forecast form of:
+
+            \[Price_{M + 1} = Price_{M} + 0.259 * \epsilon_{M} - 1.515\]
+          </p>
+        </div><!-- /.col-12 -->
+
+        <!-- NEW HEADER for ALL METAL MODEL SUMMARIES -->
+        <div class="col-12" id='TimeSummary'>
+          <h2>Metal Model Summaries:</h2>
+          <p>
+            Based on the same process of reviewing autocorrelation function values and testing potential ARIMA models against real price data, selecting the model with the lowest AIC and significant alpha and/or beta values, as 
+            applicable (<i>no constant value was ever significant</i>), <b>the best ARIMA model for each metal (including aluminum) is summarized and presented in the table below</b>:
+          </p>
+        </div><!-- /.col-12 -->
+
+        <div class="col-12">
+          <table class="styled-table">
+            <thead>
+              <tr>
+                <th>Metal</th>
+                <th>ARIMA Order</th>
+                <th>Equation</th>
+                <th>Mean Square Sum of Residuals</th>
+              </tr>
+            </thead>
+            <tbody>
+                <tr>
+                  <td>Aluminum</td>
+                  <td>(0,1,1)</td>
+                  <td>\(Price_{M + 1} = Price_{M} + 0.259 * \epsilon_{M} - 1.515\)</td>
+                  <td>43,880</td>
+                </tr>
+                <tr>
+                  <td>Copper</td>
+                  <td>(1,1,0)</td>
+                  <td>\(Price_{M + 1} = Price_{M} + 0.320 * (Price_{M} - Price_{M-1}) + 1.827\)</td>
+                  <td>607,800</td>
+                </tr>
+                <tr>
+                  <td>Iron Ore</td>
+                  <td>(0,1,1)</td>
+                  <td>\(Price_{M + 1} = Price_{M} + 0.261 * \epsilon_{M} + 0.0666\)</td>
+                  <td>459.7</td>
+                </tr>
+                <tr>
+                  <td>Nickel</td>
+                  <td>(1,1,0)</td>
+                  <td>\(Price_{M + 1} = Price_{M} + 0.372 * (Price_{M} - Price_{M-1}) - 1.520\)</td>
+                  <td>8,816,000</td>
+                </tr>
+                <tr>
+                  <td>Zinc</td>
+                  <td>(0,1,1)</td>
+                  <td>\(Price_{M + 1} = Price_{M} + 0.364 * \epsilon_{M} - 0.0978\)</td>
+                  <td>107,400</td>
+                </tr>
+            </tbody>
+          </table>
+        </div><!-- /.col-12 -->
+
+        <div class="col-12">
+          <p>
+            Not shown in the table, but present in the ACF and model preparation data, each model above did not have a significant model constant, just as with the aluminum model, showing effectively, that <b>each 
+            real metal price model is a random walk</b> with only minor gains in AIC and a lowering of the mean sum square of the residuals by adopting the autoregressive/moving average elements (alpha and beta 
+            values, respectively) and a constant drift term. Further, visual comparison of the forecasted and real commodity prices show the ARIMA model is <b>not particularly suited for forecasting the large, 
+            semi-random variance in the price data of each commodity over time</b>, that is to say, a random walk ARIMA model cannot account for a large variance of data which is present in all of the price data.<br><br>
+
+            Featured in the summary table and important for model comparison are the <b>Mean Sum Square of the Residuals (MSSR)</b>.  <i>Residuals</i> are the difference between the forecasted value and the 
+            true value; they are effectively the error of the model (just with a fancier term).  The ultimate goal of this project is to compare the effectiveness of a Machine Learning, Recurring Neural Network (RNN), 
+            model utilizing market indicators with time delays against a base-line model, in this case the autoregressive-integrated-moving-average models, for predicting metal commodity prices.  To effectively compare
+            these models, the MSSR for the two developed models will be compared for each commodity with the end goal of finding a RNN model with a statistically different and <i>lower</i> MSSR, confirming a 
+            better model. <br><br>
+            
+            The MSSR will only be compared between models and not between commodities.  The difference in MSSR between commodities for the same type of model (ARIMA or RNN) <b>may indicate less about the efficacy of the 
+            model for forecasting and more about the nature or type of the data</b>.  For instance: In the ARIMA summary table above, the nickel ARIMA model has a very large MSSR (greater than <i>8 million</i>) while 
+            the iron ore ARIMA model has a small MSSR (less than 500).  This does not mean that the ARIMA model is <i>orders of magnitude</i> better at forecasting iron ore prices or is fundamentally better suited for 
+            iron ore price forecasting, but more that nickel prices are much higher than iron ore (~$7000US per metric ton for nickel vice ~$30US per metric ton for iron ore over the evaluated span) and the variance of 
+            the nickel price was exceptionally high (ranging from ~$3500 to $32,000) compared to iron ore (ranging from ~$10 to $100).  Controlling for prices, by comparing models for the same price data, <b>will</b> 
+            allow a qualitative assessment of the suitability of a particular model for price forecasting.
+          </p>
+        </div><!-- /.col-12 -->
+
+      </div><!-- /.row -->
+
+    <!-- Single column row for illustrating pricing data -->
+    <div class="row">
+      <div class="col-12">
+        <h2>Machine Learning Model for Commodity Pricing</h2>
+        <p>It has been shown in the analysis above that there are limitations to time-series analysis and modeling of commodity price data (i.e., less effective modeling of data variance and no clear trend in the price 
+          data, resulting in a random walk model for price forecasting).  Time series analysis is a single variable (i.e., price over time) approach for modelling.  In the next section, Machine Learning algorithms, 
+          specifically a Recurring Neural Network (RNN), will utilize multiple market indicators (e.g., inflation, corporate bond yields, and stock index prices) with time-delayed consideration of these variables to 
+          potentially produce an improved model that better accounts for the distribution and trends of metal commodity prices.  RNN background and creation are discussed in the <b>Machine Learning Section</b>:</p>
+      </div><!-- /.col-lg-12 -->
+    </div><!-- /.row -->
+    <div class='row'>
+      <div class="d-flex justify-content-center">
+          <a class="btn btn-secondary" href="machineLearn.html">Machine Learning Analysis: &raquo;</a></p>
+      </div><!-- /.col-lg-12 -->
+    </div><!-- /.row -->
+  </div><!-- /.container -->
+  
+
+  <!-- FOOTER -->
+  <footer class="container-fluid footBox">
+    <p class="float-end"><a href="#">Back to top</a></p>
+    <p>&middot; Special Thanks to BootStrap 5.0.0 for Design CSS and HTML Outline &copy; Probably Them</p>
+  </footer>
+
+  </main><!-- /.container -->
+
+  <!-- Load final scripting of Boostrap elements -->
+  <script src="assets/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- External JS libraries -->
+  <script src="js/d3.min.js"></script>
+  <!-- Custom JS -->
+  <script src="js/time_analysis.js"></script>
+
+</body>
+</html>

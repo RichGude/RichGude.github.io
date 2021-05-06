@@ -1,0 +1,62 @@
+[
+    {
+        "Factor": "D12",
+        "Value": "0.114048168"
+    },
+    {
+        "Factor": "E12",
+        "Value": "0.220939085"
+    },
+    {
+        "Factor": "b/m",
+        "Value": "0.025713768"
+    },
+    {
+        "Factor": "tbl",
+        "Value": "0.058857221"
+    },
+    {
+        "Factor": "AAA",
+        "Value": "-0.194524646"
+    },
+    {
+        "Factor": "BAA",
+        "Value": "0.238703892"
+    },
+    {
+        "Factor": "lty",
+        "Value": "0.073544569"
+    },
+    {
+        "Factor": "ntis",
+        "Value": "0.165252328"
+    },
+    {
+        "Factor": "Rfree",
+        "Value": "-0.004744066"
+    },
+    {
+        "Factor": "infl",
+        "Value": "0.090319529"
+    },
+    {
+        "Factor": "ltr",
+        "Value": "-0.273565918"
+    },
+    {
+        "Factor": "corpr",
+        "Value": "0.258125156"
+    },
+    {
+        "Factor": "svar",
+        "Value": "0.096812345"
+    },
+    {
+        "Factor": "SPvw",
+        "Value": "0.050731577"
+    },
+    {
+        "Factor": "Aluminum",
+        "Value": "0.863891006"
+    }
+]

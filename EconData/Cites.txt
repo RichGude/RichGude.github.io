@@ -1,0 +1,12 @@
+Predictor data taken from Amit Goyal's Homepage published in conjuction with "A Comprehensive Look
+  at the Empirical Performance of Equity Premium Prediction"
+
+From this article: "The most prominent x variables explored in the literature
+are the dividend price ratio and dividend yield, the earnings price ratio and
+dividend-earnings (payout) ratio, various interest rates and spreads, the
+inflation rates, the book-to-market ratio, volatility, the investment-capital
+ratio, the consumption, wealth, and income ratio, and aggregate net or
+equity issuing activity."
+
+
+

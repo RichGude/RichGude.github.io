@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!--Basic header tags to establish character sets and Browser use-->
+  <meta charset='UTF-8'>
+  <meta http-equiv='X-UA-Compatible' content="IE=edge">
+  <meta name="description" content="HTML page for analyzing common metal prices from 1990 through 2021">
+  <meta name="author" content="Rich Gude:  Bootstrap HTM/CSS Contributions from: Mark Otto, Jacob Thornton, and Bootstrap contributors">
+  <!--Define FavIcon: freely sourced from: https://www.websiteplanet.com/webtools/favicon-generator/ -->
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon.png">
+  <!--Header tag for proper rending and touch zooming on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <!--Header links for Bootstrap page elements-->
+  <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/carousel/">
+  <!-- Bootstrap core CSS -->
+  <link href="assets/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Custom core CSS -->
+  <link href="machineLearn.css" rel="stylesheet">
+
+  <!--Establish the Title of the Page: required for HTML and shown in the Browser Toolbar-->
+  <title>Machine Learning Analysis</title>
+
+  <!-- For loading AMChart info -->
+  <script src="https://cdn.amcharts.com/lib/4/core.js"></script>
+  <script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
+  <script src="https://cdn.amcharts.com/lib/4/maps.js"></script>
+  <script src="https://cdn.amcharts.com/lib/4/themes/dataviz.js"></script>
+  <script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
+
+  <!-- For Equation Display -->
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async
+          src="https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/tex-mml-chtml.js">
+  </script>
+
+</head>
+<body>
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="index.html">Project Overview</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+  
+      <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav me-auto mb-2 mb-md-0">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="background.html" id="dropdown01" data-bs-toggle="dropdown" aria-expanded="false">Commodities Background</a>
+            <ul class="dropdown-menu" aria-labelledby="dropdown01">
+              <li><a class="dropdown-item" href="background.html">Metal Commodities</a></li>
+              <li><a class="dropdown-item" href="background.html#BackOutput">Global Output</a></li>
+              <li><a class="dropdown-item" href="background.html#BackPrice">Commodity Price</a></li>
+            </ul>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="time_analysis.html" id="dropdown01" data-bs-toggle="dropdown" aria-expanded="false">Time Analysis</a>
+            <ul class="dropdown-menu" aria-labelledby="dropdown01">
+              <li><a class="dropdown-item" href="time_analysis.html">Executive Summary</a></li>
+              <li><a class="dropdown-item" href="time_analysis.html#TimeReal">Real Price</a></li>
+              <li><a class="dropdown-item" href="time_analysis.html#TimeStationary">Data Stationary</a></li>
+              <li><a class="dropdown-item" href="time_analysis.html#TimeARIMA">ARIMA Modeling</a></li>
+              <li><a class="dropdown-item" href="time_analysis.html#TimeSummary">Metal Model Summaries</a></li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="machineLearn.html">Machine Learning</a>
+          </li>
+        </ul>
+        <form class="d-flex">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+      </div>
+    </div>
+  </nav>
+  
+  <main>
+  
+
+  <div class="container-fluid" style='margin:0'>
+    <div class="row headerBack justify-content-center">
+      <div class="col-12">
+        <h1>Machine Learning Analysis:</h1>
+      </div><!-- /.col-lg-12 -->
+    </div><!-- /.row -->
+  </div><!-- /.container-fluid-->
+
+  <!-- Create Executive Summary
+  <div class="container executive">
+    <div class="row">
+      <div class="col-12">
+        <h2>Machine Learning Executive Summary</h2>
+        <p>
+            XXX
+        </p>
+      </div>
+    </div>
+  </div><-- /.container executive -->
+
+  <div class="container">
+    <div class="row" id='ModelGoals'>
+      <div class="col-lg-12">
+        <p>
+          The following page discusses and visualizes the process and outcomes for <b>Linear Regressive and Recurring Neural Network (RNN)</b> machine learning models
+          developed for forecasting pricing of each metal commodity, <b>Aluminum</b>, <b>Copper</b>, <b>Iron</b>, <b>Nickel</b>, and <b>Zinc</b>: <br>
+        </p>
+
+        <h2>Model Feature Data: Economic Indicators</h2>
+        <p>
+          Identified on the <a href="index.html">Project Overview</a>, this project follows the work of Welch &amp; Goyal (2008)<sup>1</sup> and follow-on efforts by Wang
+          et al. (2020)<sup>2</sup>.  Economic and financial feature data utilized by Welch and Goyal in their report (2008)<sup>1</sup> is publically available and 
+          procured via .xlsx format from the office of Amit Goyal at <a href='http://www.hec.unil.ch/agoyal'>his personal site</a>.  The fourteen (14) economic features
+          Welch and Goyal identified to have any potentially-significant effect for the prediction of returns are detailed below.  Each was collected monthly from January
+          1990 to December 2019, relatively matching the commodity price data collected from the International Monetary Fund (IMF).</p>
+
+          <h4>Economic Indicators for Model Creation:</h4>
+          <ol>
+            <li><b>Dividends (D12):</b> Dividends are twelve-month moving sums of dividends paid on the S&amp;P 500 index; data obtained from the S&amp;P Corporation.</li>
+            <li><b>Earnings (E12):</b> Earnings are twelve-month moving sums of earnings on the S&amp;P 500 index. Data obtained from Robert Shiller’s website for the 
+              period 1990 to June 2003. Earnings from June 2003 to 2020 are from Goyal estimates on interpolation of quarterly earnings provided by the S&amp;P Corporation.</li>
+            <li><b>Book to Market Ratio (b/m):</b> the ratio of book value to market value for the Dow Jones Industrial Average. For the months of March to December, 
+              computed by dividing the book value at the end of previous year by the price at the end of the current month. For the months of January to February, this is
+              computed by dividing the book value at the end of 2 years ago by the price at the end of the current month.</li>
+            <li><b>Treasury Bills (tbl):</b>  T-bill rates from 1990 to 2020 are the 3-Month Treasury Bill, Secondary Market Rate.</li>
+            <li><b>Corporate Bond Yields (AAA):</b> Yields on AAA-rated bonds for the period 1990 to 2020</li>
+            <li><b>Corporate Bond Yields (BAA):</b> Yields on BAA-rated bonds for the period 1990 to 2020</li>
+            <li><b>Long Term Yield (lty):</b> Long-term government bond yields for the period 1990 to 2020</li>
+            <li><b>Net Equity Expansion (ntis):</b> the ratio of twelve-month moving sums of net issues by New York Stock Exchange (NYSE)-listed stocks divided by the total 
+              market capitalization of NYSE stocks. This dollar amount of net equity issuing activity (IPOs, SEOs, stock repurchases, less dividends) for NYSE listed stocks
+              is computed from Center for Research in Security Prices data</li>
+            <li><b>Risk-free Rate (Rfree):</b> The risk-free rate for the period 1990 to 2020 is the T-bill rate</li>
+            <li><b>Inflation (infl):</b> the Consumer Price Index (All Urban Consumers) for the period 1990 to 2020 from the Bureau of Labor Statistics, lagged by one 
+              month to account for distribution lag.</li>
+            <li><b>Long Term Rate of Return (ltr):</b> Long-term government bond returns for the period 1990 to 2020 are from Ibbotson’s Stocks, Bonds, Bills and 
+              Inflation Yearbook.</li>
+            <li><b>Corporate Bond Returns (corpr):</b> Long-term corporate bond returns for the period 1990 to 2020 are from Ibbotson’s Stocks, Bonds, Bills and 
+              Inflation Yearbook.</li>
+            <li><b>Stock Variance (svar):</b> Stock Variance is computed as sum of squared daily returns on S&amp;P 500. Daily returns from 1990 to 2020 are obtained 
+              from CRSP.</li>
+            <li><b>Stock Prices (SPvw):</b> S&amp;P 500 index prices from 1990 to 2020 from CRSP’s month-end values. Stock Returns are the continuously-compounded 
+              returns on the S&amp;P 500 index.</li>
+        </ol>
+        <p>
+          The numerical values, summarized in the table below, vary considerably between economic features.
+        </p>
+        <table class="styled-table">
+          <thead>
+            <tr>
+              <th><b>Metric</b></th> <th>D12</th> <th>E12</th> <th>b/m</th> <th>tbl</th> <th>AAA</th> <th>BAA</th> <th>lty</th>
+              <th>ntis</th> <th>Rfree</th> <th>infl</th> <th>ltr</th> <th>corpr</th> <th>svar</th> <th>SPvw</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><b>Mean:</b></td> <td>24.43</td> <td>58.73</td> <td>0.2866</td> <td>0.02704</td> <td>0.05910</td> <td>0.06862</td> <td>0.04999</td> 
+              <td>0.004487</td> <td>0.002253</td> <td>0.001985</td> <td>0.006580</td> <td>0.006762</td> <td>0.002532</td> <td>0.008889</td>
+            </tr>
+            <tr>
+              <td><b>StDev:</b></td> <td>12.64</td> <td>33.58</td> <td>0.08243</td> <td>0.02217</td> <td>0.01686</td> <td>0.01657</td> <td>0.01897</td> 
+              <td>0.02094</td> <td>0.001847</td> <td>0.003273</td> <td>0.02894</td> <td>0.02514</td> <td>0.004504</td> <td>0.04095</td>
+            </tr>
+          </tbody>
+        </table>
+        <p><br>
+          Such information is only marginally helpful for understanding the data; rather, more important for modeling purposes, is <b>the normalized spread of the data</b>.
+          Normalizing the data allows a simple, comprehensive view of the feature data and each feature's relationship to both the real price and each other feature;  
+          <b>visualizing the spread</b>, via a <i>violin chart</i>, <b>or the trend</b>, via a <i>line chart</i>, without normalization would exacerbate or hide the 
+          correlations between features, though the effect on model output should be negligible since proportional weighting in each model kernel would take into account
+          absolute numerical spread of the data.  Just as in the Time-Series Section, <b>the determination of the aluminum RRN model will be showcased throughout 
+          this section</b>, with all other models determined in the same way and reported below. <b>Illustrated below are the spread and trend of the economic feature and 
+          aluminum price data</b>:
+        </p>
+      </div><!-- /.col-lg-12 -->
+    
+      <!-- Plots of Economic Factor Data -->
+      <div class="col-12">
+        <h4 style="color:rgba(113, 50, 168, 1)">Violin Chart of Feature and Price Normalized Value Spread</h4>
+        <div id="violin_div"></div>
+      </div><!-- /.col-12 -->
+      <div class="col-12">
+        <h4 style="color:rgba(211, 97, 97, 1)">Linear Chart of Feature and Price Normalized Trends</h4>
+        <div id="feature_div"></div>
+      </div><!-- /.col-12 -->
+    </div><!-- /.row -->
+
+    <div class="row">
+      <div class="col-lg-12">
+        <p>
+          <br><b>From the interactive trend plot above</b>, filtering out each feature (<i>by clicking on the feature label in the legend</i>) until only the normalized 
+          aluminum price and the single feature selected remain, there are three features that may seem to show correlation with a change in aluminum pricing at any time:
+          <b>Treasury bills rates, risk-free rate, and Stock variance</b>, seem to show, if not predictive, then correlational behavior with the aluminum price.  Each of 
+          the rates seem to semi-directly correlate with the price (rates rising when the aluminum price rises, or falling when the price falls), while any sharp increase
+          in the stock variance (associated with stock market shocks, such as the 2008 Recession), correlate with a sharp decline in the commodity price of aluminum.
+        </p>
+        <h3>Price and Factor Correlation</h3>
+        <p>
+          <b>Identifying trends is important</b> for understanding the relationship between economic factors and price, and how these relationships <i>should</i> be  
+          mirrored in the architecture or kernel weighting of any machine learning model.  Identifying these trends visually, as attempted above, is difficult; however,
+          <b>numerically identifying the correlation</b> between factors and price is a relatively simple task.  <b>Correlation</b> numerically represents the 
+          interdeterpendence of two factors: a correlation of <b>'1'</b> identifies that the two factors are proportionally linked, rising or falling in perfect union;  
+          correlation does <i>not</i> imply a causal link between factors, but does imply a shared relationship either directly or indirectly (such as sharing a common 
+          cause).  A correlation of <b>'-1'</b> identifies that the two factors are inversely linked, with one rising when the other falls or vice-versa.  A correlation
+          of <b>'0'</b> identifies that the two factors are completely independent of each, rising or falling randomly with respect to each other.
+
+          A heat map showing the correlations between economic factors amongst themselves and with aluminum price is presented below:
+        </p>
+      </div><!-- /.col-12 -->
+
+      <!-- Plots of Economic Factor Correlation -->
+      <div class="col-12">
+        <h4 style="color:rgb(46, 43, 201)">Economic Factor and Aluminum Price Correlation</h4>
+        <div id="corr_div"></div>
+      </div><!-- /.col-12 -->
+
+      <div class="col-12">
+        <p>
+          Shown in the chart above, the economic factors with the largest positive correlations between each other are highlighted in green, while those with largest negative 
+          correlation are highlighted in red.  In this way, the correlations between <b>treasury bill rates</b>, <b>AAA and BAA-rated corporate bond yields</b>, <b>long-term 
+          yield</b>, and <b>the risk-free rate</b> are shown to be the highest positively correlated (although, the correlation between risk-free rate and treasury bill rate
+          was already established in the economic factor descriptions).  <i>Conversely</i>, the <b>earnings and dividends from the S&amp;P 500 index</b> had the largest 
+          negative correlation to these same factors (the treasury bill rate, corporate bond yields, and risk-free rate). The correlations between any of the remaining factors 
+          were moderate at best; <b>moderate or small correlation between model features is desirable</b>, since strongly correlated features generally take up processing
+          resources without positively contributing to the model (hence, the method for Principal Component Analysis (PCA)). <br><br>
+
+          <b>Reviewing the correlation between any of the economic factors and the aluminum price</b> along the bottom row or last column of the correlation matrix (all correlation 
+          matrices are symmetrical) shows <b>no factors with more than a moderate (|corr_value| < 0.6) correlation with aluminum price</b>.  The two factors most strongly
+          correlated with price, both positively or negatively, respectively - either is generally good for modeling/prediction purposes, are <b>treasury bill rate</b> 
+          (which, as described above is heavily correlated with risk-free rate, corporate bond yields, and long-term yield) and <b>dividends from the S&amp;P 500 index</b>
+          (again, correlated, in turn, with S&amp;P index earnings). From their moderate correlation, these factors, employed in a machine learning model, may entail better 
+          predictive capabilities for the model, or, of equal probability, the correlation between each factor and aluminum price may not sufficiently precede the price 
+          trend in order to accurately predict the latter. <br><br>
+          
+          <i>Another way of illustrating this</i>, consider predicting rain from measured humidity: it's well known that as humidity rises to near 100%, the odds of the 
+          weather subsequently raining are very high; humidity is a great predictor for rain.  The reverse relationship is less helpful: if it starts to rain, one could 
+          correctly say that the humidity is probably very high, near 100%; however, it has likely already been very humid for some, and the rain/no rain dichotomy is not 
+          helpful for predicting moderate shifts in humidity (say from 20% to 50%). <br><br>
+
+          To ascertain whether trends in economic data precede accompanying trends in aluminum price data, a lag, or 1 through 5 months, was assigned to the aluminum price;
+          <b>the correlations between each of new lagged price features and the economic and original aluminum price are presented below</b>:
+        </p>
+      </div><!-- /.col-12 -->
+
+      <!-- Plots of Economic Factor Correlation -->
+      <div class="col-12">
+        <h4 style="color:rgb(55, 18, 80)">Economic Factor and Lagged Aluminum Price Correlation</h4>
+        <div id="ahead_corr_div"></div>
+      </div><!-- /.col-12 -->
+
+      <div class="col-lg-12">
+        <p><br>
+          <b>Reviewing the correlations between any of the economic factors and the lagged aluminum price</b> shows that most of the strongest correlated factors with 
+          aluminum price diminished moderately with time, including the non-lagged aluminum price (the moderate drop in correlation with lagged price corresponds to 
+          the autocorrelation function values determined in the Time Analysis Section of this report): treasury bill rate dropped from 0.4988 to 0.4575 along with all the 
+          similarly-correlated factors, such as corporate yields and long-term yields. the S&amp;P index dividend returns showed <i>no drop</i> in correlation over time. 
+          The <b>stock variance</b> was the only factor is appreciably rise in correlation, though even this rise is still stasticially insignificant, from -0.0576 to 
+          -0.1948 at a lag of four months.
+
+          For each model, any and all of the preceding economic features <i>may</i> be used (see Feature Selection below) in addition to the real price commodity data 
+          for which the model is being derived; including the price data allows technical indicators such as those described by Wang et al. to be modeled in the RNN layer 
+          weighting.  <b>It may be expected that model weighting, at least for simple linear regression techniques, corresponds with the correlations identified above</b>, 
+          although model efficacy is heavily dependent on the quality and quantity of features selected for model inclusion and feature correlations may be dubious indicators.
+        </p>
+
+        <h2>Feature Selection:</h2>
+        <p>
+          From the most basic economic perspective, the price of commodities are driven by the supply and demand of each commodity: scarcity and high demand generally
+          drive price higher, while abundance and low demand drive price lower.  This is by no means the extent of the factors driving price, but when attempting to
+          understand the relationship between prices and economic factors, it may help to understand the role on demand or supply of various economic factors both for
+          individual commodities, but also for other sectors of the economy where relative scarcity (lack of supply and/or overabundance of demand) or abundance may 
+          affect commodity prices.  <i>For instance</i>, as discussed in the Time Series Section, when inflation is low, investors seeking a large rate of return for 
+          invested capital may invest outside of commodities markets, whereas the reverse may be true for periods of high inflation.  Greater investment leads to greater 
+          prices. <br><br>
+
+          <b>Previous autoregressive analysis</b> of commodity prices show that there is a strong correlation of the aluminum price month to month, resulting in a 
+          <i>random walk model</i> for forecasting the aluminum price.  Autocorrelation and partial autocorrelation also showed that the effect on a current month's 
+          aluminum price is limited to the first previous month and no further back.  In investigating the effect of economic features on the commodity pricing,  
+          <b>it is not immediately known whether delayed correlation responses from any particular feature significantly affect the commodity price</b>; for that reason, the 
+          basis for the machine learning model that will be employed for this project is a <b>Recurring Neural Network (RNN) that collects price and economic feature 
+          data from a 6-month window to predict price data out to 6 months</b>.  A 6-month window was chosen to ensure that any offset in the publication of some 
+          economic feature data or the natural economic feedback of any other feature that would ultimately affect commodity price are incorporated into the model 
+          (<i>e.g., according to Welch and Goyal in their paper, inflation data is only relreased in the following month from when it would otherwise affect pricing, 
+          so the effect of inflation may on commodity pricing may be delayed; the weight factoring for the previous month should correspond for any delayed response</i>).
+          <br><br></p>
+
+        <h4>Simple Modeling Weights</h4>
+        <p>
+          To illustrate the effect of factor weighting on price forecasting, <b>consider two models as such</b>: the first model is the simplest machine learning 
+          model possible, <b>a single neuron, with 15 inputs</b>, corresponding to the economic factor and aluminum price normalized values from one month.  The second 
+          is also <b>a single neuron, but with <i>90</i> inputs</b>, corresponding to the economic factor and aluminum price normalized values from six months previous.
+          Developing these two models, with too many variables as they may have, and reviewing the kernel (or <i>weight factors</i>) gives insight into the relationship 
+          between each economic factor and aluminum price.  Consider the first model, a single neuron with 15 weights and 1 bias factor (<i>bias trends to zero with 
+          normalized</i>); this model and the derived weights from the 
+      
+        </p>
+      </div><!-- /.col-lg-12 -->
+
+      <!-- Plots of Model Weight Data -->
+      <div class="col-3">
+        <h4 style="color:rgba(31, 68, 233, 1)">Simple Linear Model: 1-Month Data</h4>
+        <div id="model1_div"></div>
+      </div><!-- /.col-3 -->
+      <div class="col-9">
+        <h4 style="color:rgba(27, 151, 253, 1)">Simple Linear Model Weight Values</h4>
+        <div id="weight1_div"></div>
+      </div><!-- /.col-9 -->
+
+      <div class="col-lg-12">
+        <p>
+          <br><b>Seen in the weights above</b>, there are multiple fairly significant features, including <b>earnings</b>, <b>corporate bond yeilds</b>, and 
+          <b>long-term returns</b>, with normalizes weights great than 0.2; <i>however</i>, as was mentioned previously, many of these significant features are also
+          moderately correlated.  In practice, <b>there are multiple potentially-significant features with weights that actually cancel to the two out</b>.  Consider 
+          <i>AAA and BAA-rated corporate bonds</i>: shown in the correlation matrix, these two features are heavily positively correlated (rising and falling in tandem), 
+          but in the simple model presented about, they have near-equal and opposite weighting.  What this means, in effect, is the two features cancel each other 
+          out, and there would be no difference in the model simply weighting both as zero; it is a feature/bug of the optimization process that the model doesn't already 
+          do this for correlated data. Based on the correlation of features, it is likely that <b>the long-term government (ltr) and corporate (corpr) bond yields</b>, 
+          <b>the AAA and BAA-rated yields</b>, and the <b>dividends/earnings from the S&amp;P Index and Net Equity Expansion (ntis)</b> may all act to cancel each other 
+          out, at least partially.
+
+          In this regard, when selecting the correct RNN model and incorporated features, <b>multiple models exploring different combinations of economic features</b>
+          will be necessary.
+        </p>
+      </div><!-- /.col-lg-12 -->
+    </div><!-- /.row -->
+  </div><!-- /.container-->
+    
+  <div class="container executive">
+    <div class="row">
+      <div class="col-12">
+        <h2>Project Conclusions and Reflection</h2>
+        <p>
+            The goal of this project is to evaluate the effectiveness of a machine learning model, specifically one tailored to time series data, such as the Recurring 
+            Neural Network (RNN) model, for predicting commodity price fluctuations over a standard autoregressive model.  So far presented are the autoregressive models 
+            and the feature and correlation data background that will be pivotal to developing the RNN models for comparison.  Due to time constraints, the descriptions 
+            of these RNN models have yet to be incorporated into the presented material here; however, <b>the RNN models otherwise developed for predicting commodity 
+            prices were found, due to overfitting with too many model variables and the inate random spread of the price data, as shown by autocorrelation analysis, to 
+            not significantly improve upon the autoregressive models, random walk methods</b>. <br><br>
+
+            <b>Follow-on efforts for this project</b> will explore the modeling metal commodity index funds, with the intent that index funds tend to vary less wildly with 
+            specific market flunctuations (such as gluts in supply of a particular commodity), and so may be capable of more significant modeling.<br><br>
+
+            <i>Speaking also for myself now, Rich Gude, the author: this project was a great summary project of many of the methods I've learned in my Time Series and 
+            Machine Learning classes.  Being able to methodically illustrate out the time-series and machine learning model building process, including much of the 
+            ancillary processes, such as principal component and autocorrelation analysis, was not only helpful as I had to refresh myself on these topics, but also, I was 
+            able now to scribe these methods down for future use and explanation in my future endeavors.  While this project was very long (both in researching and trying 
+            to get my graph illustrations to appear as just so), it was well worth while.</i>
+        </p>
+      </div>
+    </div> <!--/.row -->
+    <div class='row'>
+      <div class="d-flex justify-content-center">
+          <a class="btn btn-secondary" href="index.html">Project Overview and Conclusion: &raquo;</a></p>
+      </div><!-- /.col-lg-12 -->
+    </div><!-- /.row -->
+  </div><!-- /.container -->
+  
+
+  <!-- FOOTER -->
+  <footer class="container-fluid footBox">
+    <p> References: <br>
+      1. Welch I. &amp; Goyal A. (2008) A Comprehensive Look at The Empirical Performance of Equity Premium Prediction. <i>The Review of Financial Studies</i>, v21n4,
+        1455-1508<br>
+      2. Wang Y., Liu L., &amp; Wu C. (2020).  Forecasting commodity prices out-of-sample: Can technical indicators help? <i>International Journal of Forecasting</i>,
+        36, 666–683
+    </p>
+    <p class="float-end"><a href="#">Back to top</a></p>
+    <p>&middot; Special Thanks to BootStrap 5.0.0 for Design CSS and HTML Outline &copy; Probably Them</p>
+  </footer>
+
+  </main><!-- /.container -->
+  
+  <!-- Load final scripting of Boostrap elements -->
+  <script src="assets/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- External JS libraries -->
+  <script src="js/d3.min.js"></script>
+  <!-- Custom JS -->
+  <script src="js/machineLearn.js"></script>
+
+</body>
+</html>

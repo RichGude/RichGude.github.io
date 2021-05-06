@@ -1,0 +1,42 @@
+[
+    {
+        "Model": "(0,1,0)",
+        "constLow": "-8.067",
+        "constHgh": "5.308",
+        "alphaLow": "0",
+        "alphaHgh": "0",
+        "betaLow" : "0",
+        "betaHgh" : "0",
+        "AIC": "3809.562"
+    },
+    {
+        "Model": "(1,1,0)",
+        "constLow": "-10.065",
+        "constHgh": "7.017",
+        "alphaLow": "0.137",
+        "alphaHgh": "0.344",
+        "betaLow" : "0",
+        "betaHgh" : "0",
+        "AIC": "3791.296"
+    },
+    {
+        "Model": "(0,1,1)",
+        "constLow": "-9.667",
+        "constHgh": "6.636",
+        "alphaLow": "0",
+        "alphaHgh": "0",
+        "betaLow" : "0.156",
+        "betaHgh" : "0.363",
+        "AIC": "3789.758"
+    },
+    {
+        "Model": "(1,1,1)",
+        "constLow": "-9.627",
+        "constHgh": "6.601",
+        "alphaLow": "-0.424",
+        "alphaHgh": "0.387",
+        "betaLow" : "-0.114",
+        "betaHgh" : "0.667",
+        "AIC": "3791.751"
+    }
+]

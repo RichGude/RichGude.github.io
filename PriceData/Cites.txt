@@ -1,0 +1,9 @@
+All prices downloaded from the Federal Reserve Bank of St. Louis, Economic Research Division
+https://fred.stlouisfed.org/
+
+General IMF Copyright Statement:
+The IMF grants permission to visit its Sites and to download and copy information, documents,
+and materials from the Sites for personal, noncommercial usage only, without any right to resell
+or redistribute or to compile or create derivative works, subject to these Terms and Conditions
+of Usage and also subject to more specific restrictions that may apply to particular information
+within the Sites. Any rights not expressly granted herein are reserved.

@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!--Basic header tags to establish character sets and Browser use-->
+  <meta charset='UTF-8'>
+  <meta http-equiv='X-UA-Compatible' content="IE=edge">
+  <meta name="description" content="HTML page for analyzing common metal prices from 1990 through 2021">
+  <meta name="author" content="Rich Gude:  Bootstrap HTM/CSS Contributions from: Mark Otto, Jacob Thornton, and Bootstrap contributors">
+  <!--Define FavIcon: freely sourced from: https://www.websiteplanet.com/webtools/favicon-generator/ -->
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon.png">
+  <!--Header tag for proper rending and touch zooming on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <!--Header links for Bootstrap page elements-->
+  <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/carousel/">
+  <!-- Bootstrap core CSS -->
+  <link href="assets/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Custom core CSS -->
+  <link href="background.css" rel="stylesheet">
+
+  <!--Establish the Title of the Page: required for HTML and shown in the Browser Toolbar-->
+  <title>Metal Price Analysis</title>
+
+  <!-- For loading AMChart info -->
+  <script src="https://cdn.amcharts.com/lib/4/core.js"></script>
+  <script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
+  <script src="https://cdn.amcharts.com/lib/4/maps.js"></script>
+  <script src="https://cdn.amcharts.com/lib/4/geodata/worldLow.js"></script>
+  <script src="https://cdn.amcharts.com/lib/4/themes/dataviz.js"></script>
+  <script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
+
+  <!-- For loading geodata -->
+  <script src="GeoData/total_prod.js"></script>
+  <script src="GeoData/country_prod.js"></script>
+
+</head>
+<body>
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="index.html">Project Overview</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+  
+      <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav me-auto mb-2 mb-md-0">
+          <li class="nav-item dropdown">
+            <a class="nav-link active dropdown-toggle" href="background.html" id="dropdown01" data-bs-toggle="dropdown" aria-expanded="false">Commodities Background</a>
+            <ul class="dropdown-menu" aria-labelledby="dropdown01">
+              <li><a class="dropdown-item" href="background.html">Metal Commodities</a></li>
+              <li><a class="dropdown-item" href="background.html#BackOutput">Global Output</a></li>
+              <li><a class="dropdown-item" href="background.html#BackPrice">Commodity Price</a></li>
+            </ul>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="time_analysis.html" id="dropdown01" data-bs-toggle="dropdown" aria-expanded="false">Time Analysis</a>
+            <ul class="dropdown-menu" aria-labelledby="dropdown01">
+              <li><a class="dropdown-item" href="time_analysis.html">Executive Summary</a></li>
+              <li><a class="dropdown-item" href="time_analysis.html#TimeReal">Real Price</a></li>
+              <li><a class="dropdown-item" href="time_analysis.html#TimeStationary">Data Stationary</a></li>
+              <li><a class="dropdown-item" href="time_analysis.html#TimeARIMA">ARIMA Modeling</a></li>
+              <li><a class="dropdown-item" href="time_analysis.html#TimeSummary">Metal Model Summaries</a></li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="machineLearn.html">Machine Learning</a>
+          </li>
+        </ul>
+        <form class="d-flex">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+      </div>
+    </div>
+  </nav>
+  
+  <main>
+  
+
+  <div class="container-fluid" style='margin:0'>
+    <div class="row headerBack justify-content-center">
+      <div class="col-12">
+        <h1>Commodities Background:</h1>
+      </div><!-- /.col-lg-12 -->
+    </div><!-- /.row -->
+  </div><!-- /.container-fluid-->
+
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 justify-content-center">
+        <p>The following page discusses, visualizes, and interprets the current function, production, and valuation of five metal commodities: <b>Aluminum</b>, <b>Copper</b>, <b>Iron</b>, <b>Nickel</b>, and <b>Zinc</b>. 
+          A brief summary of each metal commodity under analysis, discussing its function and importance in various modern industries and principal uses, are detailed below:</p>
+        <h2>Function and Purpose of Metal Commodities</h2>
+      </div><!-- /.col-lg-12 -->
+    </div><!-- /.row -->
+
+    <!-- Create a divided row for each commodity -->
+    <div class="row descr alum">
+      <div class="col-lg-3 col-5">
+        <div class="imageL alum text"><h2>Aluminum</h2></div>
+      </div><!-- /.col-lg-3 -->  
+      <div class="col-lg-9 col-7" style='padding: 6px 3px 3px 20px'>
+        <p id='descrText'>With roughly one-third the density of steel and copper but sufficient toughness and strength for most commercial uses, <b>ALUMINUM</b> has become one of the most important and versatile metalic 
+          commodites in a multitude of industries.  The low-eight, corrosion-resistant properties of aluminum is used in transportation industries for the frames of automobiles, aeroplanes, and marine vessels, 
+          construction for construction frames, doors, and siding, and consumer goods, including a multitude of appliances, utensils, tools, and packaging. By quantity, it is the second-most produced and consumed 
+          metal commodity after iron/steel.<br><br>
+        
+          Aluminum, in it's natural form, is often chemically bonded in bauxite formations (rock consisting of aluminum hydroxide minerals); for this reason, it is fairly resource-intensive to convert dried alumina 
+          into pure aluminum metal.  Consequently, aluminum recycling forms a significant proportion of aluminum production; according to the United States Geologial Survey, in the year 2000, 36% of the US supply 
+          of aluminum metal came from recycled scrap.
+        </p>
+      </div><!-- /.col-lg-9 -->
+    </div><!-- /.row -->
+
+    <div class="row descr copp">
+      <div class="col-lg-9 col-7" style='padding: 6px 3px 3px 20px'>
+        <p id='descrText'><b>COPPER</b> is one of the oldest, industrially-used metal commodities on the planet, dating to its early incorporation into bronze armaments and tooling in the 2000s BCE.  Known today for its exceptional
+          malleability (i.e., propensity to be shaped and bent) and thermal and electrical conductivity, copper is highly utilized in electrical generation and distribution, telecommunication, and electronic product 
+          industries; these uses account for three-quarters of all copper consumption with building construction being the single largest market among its uses.  By quantity, copper is the third-largest produced metal commodity
+          after only iron/steel and aluminum, and similarly to aluminum, copper recycling makes up a significant portion of the ongoing copper supply.
+        </p>
+      </div><!-- /.col-lg-9 -->
+      <div class="col-lg-3 col-5">
+        <div class="imageR copp text"><h2>Copper</h2></div>
+      </div><!-- /.col-lg-3 -->  
+    </div><!-- /.row -->
+
+    <div class="row descr nick">
+      <div class="col-lg-3 col-5">
+        <div class="imageL nick text"><h2>Nickel</h2></div>
+      </div><!-- /.col-lg-3 -->  
+      <div class="col-lg-9 col-7" style='padding: 6px 3px 3px 20px'>
+        <p id='descrText'>Similar to iron in its atomic structure and valence, <b>NICKEL</b> has many uses in alloying with iron in austenitic stainless steel applications; the vast majority of nickel consumption (upwards of 70%) is 
+          utilized in the production of these stainless steels and other speciality alloys.  Large-constituent nickel alloys are known for their exceptional corrosion resistance, especially in high-temperature applications 
+          such as those in the aerospace and energy generation industries (namely for turbine blades, discs, and housing).  Nickel is additionally used in catalyst, coinage, foundry products and plating, and, to a growing 
+          extent, rechargeable battery applications. 
+        </p>
+      </div><!-- /.col-lg-9 -->
+    </div><!-- /.row -->
+
+    <div class="row descr iron">
+      <div class="col-lg-9 col-7" style='padding: 6px 3px 3px 20px'>
+        <p id='descrText'>Though naturally abundant, <b>IRON</b> is not normally found in its metallic form often.  For this reason, iron metal is processed from abundant iron ore deposits, generally consisting of iron oxide compounds.
+          Metalic iron itself has few industrial resources, due to its low strength and corrosion resistance, so iron is alloyed with carbon, chromium, manganese, nickel, and other elements and processed in divergent manners 
+          to produce forms of steels with varying degrees of fracture toughness, tensile strength (the last two generally being inversely proportional to each other), corrosion resistance, and a host of other desirable traits.
+          <br><br>
+          Steel is far and away the most produced metal commodity on the planet: in 2015, over 1.5 <i>billion</i> metric tons of steel were produced world-wide; for comparison, aluminum, the second most-produced metal commodity, 
+          had less than 60 <i>million</i> metric tons produced during the same period (i.e., less than 4% of the produced tonnage of steel).  There are few industries that do not utilize steel in some form.
+        </p>
+      </div><!-- /.col-lg-9 -->
+      <div class="col-lg-3 col-5">
+        <div class="imageR iron text"><h2>Iron/Steel</h2></div>
+      </div><!-- /.col-lg-3 -->  
+    </div><!-- /.row -->
+
+    <div class="row descr zinc">
+      <div class="col-lg-3 col-5">
+        <div class="imageL zinc text"><h2>Zinc</h2></div>
+      </div><!-- /.col-lg-3 -->  
+      <div class="col-lg-9 col-7" style='padding: 6px 3px 3px 20px'>
+        <p id='descrText'>The principal industrial uses of <b>ZINC</b> are in its metallic form, accounting for three-quarters of all zinc consumption.  In its metallic form, zinc is used to coat low-alloy steels (galvanized steel) as a low-cost 
+          alternative for corrosion-resistant stainless steel, as an alloy constituent in bronze, brass, and die-cast compounds, and in its rolled metallic form.  The remaining quarter of zinc consumption is in rubber, chemical,
+          and agricultural industries.  By quantity, zinc is the fourth-largest produced metal commodity after iron/steel, aluminum, and copper.
+        </p>
+      </div><!-- /.col-lg-9 -->
+    </div><!-- /.row -->
+
+    <!-- Single column row for illustrating geographic metal production data -->
+    <div class="row" id="BackOutput">
+      <div class="col-12">
+        <h2>Production Output of Metal Commodities</h2>
+        <p>Data provided from the United States Geological Survey (USGS) records the production of various commodities (measured in metric tons) by country and year.  The production output of <b>Aluminum</b>,
+          <b>Copper</b>, <b>Iron</b>, <b>Nickel</b>, and <b>Zinc</b> are detailed in the infographic below.</p>
+      </div><!-- /.col-lg-12 --> 
+      <div class="col-12 noteBlock">
+        <p><b>Utilizing the infographic:</b> The default view of the infographic is a heat map of the output quantity of Aluminum in metric tons per year per country.  The default year is 2015, but the year value can be changed by dragging the 
+          cursor at the horizontal scroll bar on the bottom of the world map for any commodity, and the specific commodity under review can be adjusted with the labeled buttons above the year scroll bar. <br><br>
+          Mousing over individual countries will highlight the country and display the specific comoddity production output of that country.  The global output trend from 2011 to 2015 for any selected commodity is shown below the world map in the 
+          line graph by default.  Clicking any specific country will show the country trend from 2011 to 2015 in the line graph, in lieu of the global trend.  The line chart showing total production of commodities can be changed to a bar chart 
+          showing the change in production through each year from 2012 to 2015 by toggling the switch labeled with <i>'year change'</i> in the line chart legend.  Also within the legend, additional metal commodity trends can be compared to the 
+          current by selecting any or all from the remaining. </p>
+      </div><!-- /.col-lg-12 -->
+    </div><!-- /.row -->
+  </div><!-- /.container -->
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-12">
+        <div  id="geo_prod_div", style="background-color: #212327; height: 800px; max-width: 100%; width: 100%"></div>
+      </div><!-- /.col-lg-12 -->
+    </div><!-- /.row -->
+  </div><!-- /.container-fluid -->
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <p><b>As can be seen in the above infographic and accompanying trend data</b>, over the period observed (2011 to 2015), the production output of each commodity rose continuously for a few commodities in a few 
+          years: <b>Aluminum</b> and <b>copper</b> saw continuous production increase year over year, increasing 22.9% and 18.6%, respectively, over the period, with <b>steel</b> and <b>zinc</b> production following a similar trend until 2015 where each saw a decrease 
+          in production to 2012 levels (still increasing 5.2% and 2.4%, respectively, on the whole over the period).  <b>Nickel</b> was the only commodity to see an overall drop in production from 2.34 million metric tons to 2.28, a 
+          comparatively small drop of 2.6% of total production). <br><br> For each metal commodity, individual countries dominate the production output: <b>China</b> dominates the aluminum, steel, and zinc markets 
+          especially for the former two, with roughly <i>10 times</i> the production output of the second-largest producer of each (the Russian Federation for aluminum and the United States for steel); in this way, 
+          the aluminum and steel production from China represents <b>roughly 50% or more</b> of the global supply of either metal.  For comparison, Chile, the largest single producer of copper, represents 30% of 
+          the global copper market, and the Philippines, the largest single producer of nickel, represents 25%.
+      </p>
+      </div><!-- /.col-lg-12 -->
+    </div><!-- /.row -->
+
+    <!-- Single column row for illustrating pricing data -->
+    <div class="row" id="BackPrice">
+      <div class="col-12">
+        <h2>Monthly Metal Commodity Prices</h2>
+        <p>Data provided from the International Monetary Fund (IMF) records the monthly global market price of various commodities (measured in non-seasonally-adjusted, current US dollars($) per metric ton).  The global market price of <b>Aluminum</b>,
+          <b>Copper</b>, <b>Iron</b>, <b>Nickel</b>, and <b>Zinc</b> are detailed in the linear graph below.</p>
+      </div><!-- /.col-lg-12 --> 
+      <div class="col-12 noteBlock">
+        <p><b>Mousing over the infographic</b> below will show individual monthly commodity prices, while mousing over any of the labels to the right of the infographic will 
+          highlight the individual metal commodity data on the infograph.  It is important to recognize that the scale for the price axis (the left/Y axis) is <i>logarithmic</i>, 
+          so the price flunctuations between more expensive commodities, such as nickel, that seemingly match price fluctuations of cheaper commodities, such as iron, may only do  
+          so in relative perspective, not in absolute monetary values.  Toggling the switch for 'linear' in the legend will change the axis from a log to linear axis, accordingly, 
+          but this scale hides the price changes of low-cost commodities (i.e., iron ore).</p>
+      </div><!-- /.noteBlock -->
+      <div class="col-12">
+        <div id="metal_price_div", style="height: 500px"></div>
+        <small><i>Global commodity price data distributed from the Federal Reserve Bank of St. Louis: Economic Research division (https://fred.stlouisfed.org/); data is copyright of 
+          the Internal Monetary Fund (IMF), displayed here as a non-commercial, primary research activity.</i></small><br><br>
+
+        <p><b>The logarithmic scale</b> presented in the graphic belies the large fluctuations in commodity metal pricing in during the previous three decades:
+          From a relatively low level with stable fluctuations in the 1990s, there is a sharp spike in commodity prices (excluding iron ore) in the mid-2000s, ending
+          in ~2008 with the global finincial crisis and "Great Recession" of 2008, followed by a modest recovery in the early 2010s and tailing off in the mid-2010s.  
+          In the period from the commodity production data above (2011 to 2015), the price of each commodity trended down, despite, as previously noted, the production output 
+          trend of all but one commodity (nickel) trending up.  These general trends agree with economic principle that as a supply (production) increases, prices tend to 
+          decrease as a set demand of each commidity drives competing suppliers to undercut each other.
+      </p>
+      </div><!-- /.col-lg-12 -->
+      <div class="col-12">
+        <h2>Analysis of Commodity Pricing</h2>
+        <p>Despite the role of gross supply on market pricing, production data only provides a small introduction to the variables and features of time-based price analyses.  These 
+          variables and features and the models of time-series predictions are discussed in greater detail in the <b>Time Analysis Section</b>:</p>
+      </div><!-- /.col-lg-12 -->
+    </div><!-- /.row -->
+    <div class='row'>
+      <div class="d-flex justify-content-center">
+          <a class="btn btn-secondary" href="time_analysis.html">View Time Analysis: &raquo;</a></p>
+      </div><!-- /.col-lg-12 -->
+    </div><!-- /.row -->
+  </div><!-- /.container -->
+  
+
+  <!-- FOOTER -->
+  <footer class="container-fluid footBox">
+    <p class="float-end"><a href="#">Back to top</a></p>
+    <p>&middot; Special Thanks to BootStrap 5.0.0 for Design CSS and HTML Outline &copy; Probably Them</p>
+  </footer>
+
+  </main><!-- /.container -->
+
+  
+  <!-- Load final scripting of Boostrap elements -->
+  <script src="assets/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- External JS libraries -->
+  <script src="js/d3.min.js"></script>
+  <!-- Custom JS -->
+  <script src="js/background.js"></script>
+
+</body>
+</html>

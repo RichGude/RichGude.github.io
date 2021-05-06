@@ -1,0 +1,33 @@
+The GeoData comes from 2015, XLS-Format reports from The USGS National Minerals Information Center
+for the following metals:
+	Iron and Steel	(https://www.usgs.gov/centers/nmic/iron-and-steel-statistics-and-information)
+	Nickel		(https://www.usgs.gov/centers/nmic/nickel-statistics-and-information)
+	Copper		(https://www.usgs.gov/centers/nmic/copper-statistics-and-information)
+	Zinc		(https://www.usgs.gov/centers/nmic/zinc-statistics-and-information)
+	Aluminum	(https://www.usgs.gov/centers/nmic/aluminum-statistics-and-information)
+
+For ease raw data was manipulated outside of Python in Microsoft Excel.  The following sheets were
+selected and ammended from each XLS file:
+
+	Aluminum
+	- Sheet 'T13', footnote annotations were dropped
+	- Values are converted 1000 metric tons to metric tons
+
+	Copper
+	- Sheet 'T20', footnote annotations were dropped
+	- Values show 'concentrate' and 'leaching/electrowon' totals
+	- Values are in metric tons
+
+	Iron
+	- Sheet 'T10', footnote annotations were dropped
+	- Values are converted 1000 metric tons to metric tons
+
+	Nickel
+	- Sheet 'T10', footnote annotations were dropped
+	- Values show all ore (sulfide or laterite) totals
+	- Values are in metric tons
+
+	Zinc
+	- Sheet 'T9', footnote annotations were dropped
+	- Values are in metric tons
+	

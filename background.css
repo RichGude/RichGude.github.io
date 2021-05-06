@@ -1,0 +1,181 @@
+html {
+    height: 100%; /* the margins of the page will always be 100% of the page*/
+}
+
+body {
+    padding-top: 5rem;}
+
+h2 {
+    margin: 10px 0 10px 0;
+}
+
+p {
+    font: normal 'Roboto', "century gothic", arial, sans-serif; /* If the gothic font is not available, use arial, and if that's not available, use any sans-serif font */
+    color: #111;
+}
+
+#metal_price_div {
+    width: 100%;
+    height: 500px;
+    max-width: 90%;}
+
+/* For background image behind slide header */
+.headerBack {
+    width: 101.8%;
+    height: 200px;
+    padding: 0;
+    margin: -24px 0 15px -1%;
+    position: relative;
+    background-size: cover;
+    background: 
+        linear-gradient(
+        rgba(0, 0, 0, 0),
+        rgba(0, 0, 0, 0.6)
+        ),
+        url(info/com_background2.jpg);
+}
+
+.headerBack h1 {
+    font-family: 'Roboto', "century gothic", arial, sans-serif;
+    font-weight: 900;
+    color: white;
+    text-transform: uppercase;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-size: 3rem;
+    transform: translate(-50%, -50%);
+    text-shadow: 0 1px 0 black;
+}
+
+.headerBack b {
+    font-weight: 600;
+}
+
+/* Centered text above metal images.  Define two separate image classes depended on whether the image is on the right or left of the row box */
+.imageL {
+    width: calc(100% + 16px);
+    height: calc(100% + 12px);
+    position: relative;
+    background-size: cover;
+    margin: -6px 0px 0 -17px; /* negative margin is .decsr padding + border*/
+    float: left;
+    border-top-left-radius: 16px;
+    border-bottom-left-radius: 16px;
+    /*box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);*/
+  }
+
+.imageR {
+width: calc(100% + 17px);
+height: calc(100% + 10px);
+position: relative;
+background-size: cover;
+margin: -5px -18px 0 0px; /* negative margin is .decsr padding + border*/
+float: right;
+border-top-right-radius: 16px;
+border-bottom-right-radius: 16px;
+/*box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);*/
+}
+
+.imageL.alum {
+    background: 
+        linear-gradient(
+        rgba(0, 0, 0, 0),
+        rgba(0, 0, 0, 0.6)
+        ),
+        url(info/aluminum.jpg);
+}
+.imageR.copp {
+    background: 
+        linear-gradient(
+        rgba(0, 0, 0, 0),
+        rgba(0, 0, 0, 0.6)
+        ),
+        url(info/copper.jpg);
+}
+.imageL.nick {
+    background: 
+        linear-gradient(
+        rgba(0, 0, 0, 0),
+        rgba(0, 0, 0, 0.6)
+        ),
+        url(info/nickel.jpg);
+}
+.imageR.iron {
+    background: 
+        linear-gradient(
+        rgba(0, 0, 0, 0),
+        rgba(0, 0, 0, 0.6)
+        ),
+        url(info/steel.jpg);
+}
+.imageL.zinc {
+    background: 
+        linear-gradient(
+        rgba(0, 0, 0, 0),
+        rgba(0, 0, 0, 0.6)
+        ),
+        url(info/zinc.jpg);
+}
+
+.text h2 {
+    font-family: 'Roboto', "century gothic", arial, sans-serif;
+    font-weight: 900;
+    color: white;
+    text-transform: uppercase;
+    margin: 0;
+    position: absolute;
+    top: 90%;
+    left: 50%;
+    font-size: 2rem;
+    transform: translate(-50%, -50%);
+    text-shadow: 0 1px 0 black;
+}
+
+/* Formatting of row objects housing metal descriptions */
+.descr {
+    border: 5px solid rgba(0, 0, 0, 0.7);
+    border-radius: 21px;
+    margin: 10px 0 10px 10px;
+    padding: 5px 5px 5px 5px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.descr.alum {
+    background-color: #ff8726; /* Default alumninum color for all infographics */
+}
+.descr.copp {
+    background-color: #d21a1a; /* Default copper color for all infographics */
+}
+.descr.nick {
+    background-color: #1c5fe5; /* Default nickel color for all infographics */
+}
+.descr.iron {
+    background-color: #45d21a; /* Default iron/steel color for all infographics */
+}
+.descr.zinc {
+    background-color: #c100e8; /* Default zinc color for all infographics */
+}
+
+/* For the white text in description boxes */
+#descrText {
+    color: white;
+    text-shadow: 1px 1px 2px #000000;
+}
+
+.noteBlock {
+    margin:2px 15px 30px 15px;
+    border: 2px solid rgba(0, 0, 0, 0.7);
+    border-top-right-radius: 15px;
+    border-bottom-left-radius: 15px;
+    padding: 5px 5px 2px 5px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    background-color: #dadada;
+}
+
+.footBox {
+    margin: 30px 0 0 0;
+    background-color: #cccccc;
+    padding: 15px 10px 50px 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}

@@ -1,0 +1,377 @@
+[
+    {
+        "Fact1": "D12",
+        "Fact2": "Alum_1",
+        "Value": "-0.356791789"
+    },
+    {
+        "Fact1": "E12",
+        "Fact2": "Alum_1",
+        "Value": "-0.159368012"
+    },
+    {
+        "Fact1": "b/m",
+        "Fact2": "Alum_1",
+        "Value": "0.171131088"
+    },
+    {
+        "Fact1": "tbl",
+        "Fact2": "Alum_1",
+        "Value": "0.494946641"
+    },
+    {
+        "Fact1": "AAA",
+        "Fact2": "Alum_1",
+        "Value": "0.361578893"
+    },
+    {
+        "Fact1": "BAA",
+        "Fact2": "Alum_1",
+        "Value": "0.327938256"
+    },
+    {
+        "Fact1": "lty",
+        "Fact2": "Alum_1",
+        "Value": "0.416289514"
+    },
+    {
+        "Fact1": "ntis",
+        "Fact2": "Alum_1",
+        "Value": "-0.076870237"
+    },
+    {
+        "Fact1": "Rfree",
+        "Fact2": "Alum_1",
+        "Value": "0.494946641"
+    },
+    {
+        "Fact1": "infl",
+        "Fact2": "Alum_1",
+        "Value": "0.244633782"
+    },
+    {
+        "Fact1": "ltr",
+        "Fact2": "Alum_1",
+        "Value": "-0.02584201"
+    },
+    {
+        "Fact1": "corpr",
+        "Fact2": "Alum_1",
+        "Value": "-0.075387845"
+    },
+    {
+        "Fact1": "svar",
+        "Fact2": "Alum_1",
+        "Value": "-0.118183736"
+    },
+    {
+        "Fact1": "SPvw",
+        "Fact2": "Alum_1",
+        "Value": "0.009406292"
+    },
+    {
+        "Fact1": "Aluminum",
+        "Fact2": "Alum_1",
+        "Value": "0.96720267"
+    },
+    {
+        "Fact1": "D12",
+        "Fact2": "Alum_2",
+        "Value": "-0.357353307"
+    },
+    {
+        "Fact1": "E12",
+        "Fact2": "Alum_2",
+        "Value": "-0.159446009"
+    },
+    {
+        "Fact1": "b/m",
+        "Fact2": "Alum_2",
+        "Value": "0.157644586"
+    },
+    {
+        "Fact1": "tbl",
+        "Fact2": "Alum_2",
+        "Value": "0.489449606"
+    },
+    {
+        "Fact1": "AAA",
+        "Fact2": "Alum_2",
+        "Value": "0.350522222"
+    },
+    {
+        "Fact1": "BAA",
+        "Fact2": "Alum_2",
+        "Value": "0.313777298"
+    },
+    {
+        "Fact1": "lty",
+        "Fact2": "Alum_2",
+        "Value": "0.407638066"
+    },
+    {
+        "Fact1": "ntis",
+        "Fact2": "Alum_2",
+        "Value": "-0.054275741"
+    },
+    {
+        "Fact1": "Rfree",
+        "Fact2": "Alum_2",
+        "Value": "0.489449606"
+    },
+    {
+        "Fact1": "infl",
+        "Fact2": "Alum_2",
+        "Value": "0.237540242"
+    },
+    {
+        "Fact1": "ltr",
+        "Fact2": "Alum_2",
+        "Value": "-0.029614599"
+    },
+    {
+        "Fact1": "corpr",
+        "Fact2": "Alum_2",
+        "Value": "-0.065859231"
+    },
+    {
+        "Fact1": "svar",
+        "Fact2": "Alum_2",
+        "Value": "-0.165230499"
+    },
+    {
+        "Fact1": "SPvw",
+        "Fact2": "Alum_2",
+        "Value": "0.019548347"
+    },
+    {
+        "Fact1": "Aluminum",
+        "Fact2": "Alum_2",
+        "Value": "0.91856505"
+    },
+    {
+        "Fact1": "D12",
+        "Fact2": "Alum_3",
+        "Value": "-0.35716264"
+    },
+    {
+        "Fact1": "E12",
+        "Fact2": "Alum_3",
+        "Value": "-0.161074544"
+    },
+    {
+        "Fact1": "b/m",
+        "Fact2": "Alum_3",
+        "Value": "0.152894785"
+    },
+    {
+        "Fact1": "tbl",
+        "Fact2": "Alum_3",
+        "Value": "0.479678919"
+    },
+    {
+        "Fact1": "AAA",
+        "Fact2": "Alum_3",
+        "Value": "0.337647131"
+    },
+    {
+        "Fact1": "BAA",
+        "Fact2": "Alum_3",
+        "Value": "0.30077143"
+    },
+    {
+        "Fact1": "lty",
+        "Fact2": "Alum_3",
+        "Value": "0.397295189"
+    },
+    {
+        "Fact1": "ntis",
+        "Fact2": "Alum_3",
+        "Value": "-0.02858261"
+    },
+    {
+        "Fact1": "Rfree",
+        "Fact2": "Alum_3",
+        "Value": "0.479678919"
+    },
+    {
+        "Fact1": "infl",
+        "Fact2": "Alum_3",
+        "Value": "0.225764305"
+    },
+    {
+        "Fact1": "ltr",
+        "Fact2": "Alum_3",
+        "Value": "-0.033796282"
+    },
+    {
+        "Fact1": "corpr",
+        "Fact2": "Alum_3",
+        "Value": "-0.047978698"
+    },
+    {
+        "Fact1": "svar",
+        "Fact2": "Alum_3",
+        "Value": "-0.188665468"
+    },
+    {
+        "Fact1": "SPvw",
+        "Fact2": "Alum_3",
+        "Value": "0.056754938"
+    },
+    {
+        "Fact1": "Aluminum",
+        "Fact2": "Alum_3",
+        "Value": "0.868841148"
+    },
+    {
+        "Fact1": "D12",
+        "Fact2": "Alum_4",
+        "Value": "-0.357071714"
+    },
+    {
+        "Fact1": "E12",
+        "Fact2": "Alum_4",
+        "Value": "-0.164533092"
+    },
+    {
+        "Fact1": "b/m",
+        "Fact2": "Alum_4",
+        "Value": "0.157327559"
+    },
+    {
+        "Fact1": "tbl",
+        "Fact2": "Alum_4",
+        "Value": "0.469396462"
+    },
+    {
+        "Fact1": "AAA",
+        "Fact2": "Alum_4",
+        "Value": "0.326286179"
+    },
+    {
+        "Fact1": "BAA",
+        "Fact2": "Alum_4",
+        "Value": "0.290126428"
+    },
+    {
+        "Fact1": "lty",
+        "Fact2": "Alum_4",
+        "Value": "0.387664715"
+    },
+    {
+        "Fact1": "ntis",
+        "Fact2": "Alum_4",
+        "Value": "-0.000944531"
+    },
+    {
+        "Fact1": "Rfree",
+        "Fact2": "Alum_4",
+        "Value": "0.469396462"
+    },
+    {
+        "Fact1": "infl",
+        "Fact2": "Alum_4",
+        "Value": "0.225293686"
+    },
+    {
+        "Fact1": "ltr",
+        "Fact2": "Alum_4",
+        "Value": "-0.039993339"
+    },
+    {
+        "Fact1": "corpr",
+        "Fact2": "Alum_4",
+        "Value": "-0.048731393"
+    },
+    {
+        "Fact1": "svar",
+        "Fact2": "Alum_4",
+        "Value": "-0.194841772"
+    },
+    {
+        "Fact1": "SPvw",
+        "Fact2": "Alum_4",
+        "Value": "0.076135596"
+    },
+    {
+        "Fact1": "Aluminum",
+        "Fact2": "Alum_4",
+        "Value": "0.81694293"
+    },
+    {
+        "Fact1": "D12",
+        "Fact2": "Alum_5",
+        "Value": "-0.356730399"
+    },
+    {
+        "Fact1": "E12",
+        "Fact2": "Alum_5",
+        "Value": "-0.169087232"
+    },
+    {
+        "Fact1": "b/m",
+        "Fact2": "Alum_5",
+        "Value": "0.16351185"
+    },
+    {
+        "Fact1": "tbl",
+        "Fact2": "Alum_5",
+        "Value": "0.45777376"
+    },
+    {
+        "Fact1": "AAA",
+        "Fact2": "Alum_5",
+        "Value": "0.314704125"
+    },
+    {
+        "Fact1": "BAA",
+        "Fact2": "Alum_5",
+        "Value": "0.279188213"
+    },
+    {
+        "Fact1": "lty",
+        "Fact2": "Alum_5",
+        "Value": "0.377265456"
+    },
+    {
+        "Fact1": "ntis",
+        "Fact2": "Alum_5",
+        "Value": "0.027541363"
+    },
+    {
+        "Fact1": "Rfree",
+        "Fact2": "Alum_5",
+        "Value": "0.45777376"
+    },
+    {
+        "Fact1": "infl",
+        "Fact2": "Alum_5",
+        "Value": "0.196641857"
+    },
+    {
+        "Fact1": "ltr",
+        "Fact2": "Alum_5",
+        "Value": "-0.022098982"
+    },
+    {
+        "Fact1": "corpr",
+        "Fact2": "Alum_5",
+        "Value": "-0.027827488"
+    },
+    {
+        "Fact1": "svar",
+        "Fact2": "Alum_5",
+        "Value": "-0.186763487"
+    },
+    {
+        "Fact1": "SPvw",
+        "Fact2": "Alum_5",
+        "Value": "0.058370367"
+    },
+    {
+        "Fact1": "Aluminum",
+        "Fact2": "Alum_5",
+        "Value": "0.760586229"
+    }
+]

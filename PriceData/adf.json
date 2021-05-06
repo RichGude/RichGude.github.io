@@ -1,0 +1,27 @@
+[
+    {
+        "Metal": "Aluminum",
+        "zDiff": 0.008013,
+        "fDiff": 0.000000
+    },
+    {
+        "Metal": "Copper",
+        "zDiff": 0.489426,
+        "fDiff": 0.000001
+    },
+    {
+        "Metal": "Iron",
+        "zDiff": 0.673381,
+        "fDiff": 0.001228
+    },
+    {
+        "Metal": "Nickel",
+        "zDiff": 0.042204,
+        "fDiff": 0.000000
+    },
+    {
+        "Metal": "Zinc",
+        "zDiff": 0.003984,
+        "fDiff": 0.000000
+    }
+]

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!--Basic header tags to establish character sets and Browser use-->
+  <meta charset='UTF-8'>
+  <meta http-equiv='X-UA-Compatible' content="IE=edge">
+  <meta name="description" content="HTML page for analyzing common metal prices from 1990 through 2021">
+  <meta name="author" content="Rich Gude:  Bootstrap HTM/CSS Contributions from: Mark Otto, Jacob Thornton, and Bootstrap contributors">
+  <!--Define FavIcon: freely sourced from: https://www.websiteplanet.com/webtools/favicon-generator/ -->
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon.png">
+  <!--Header tag for proper rending and touch zooming on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <!--Header links for Bootstrap page elements-->
+  <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/carousel/">
+  <!-- Bootstrap core CSS -->
+  <link href="assets/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Custom core CSS -->
+  <link href="index.css" rel="stylesheet">
+
+  <!--Establish the Title of the Page: required for HTML and shown in the Browser Toolbar-->
+  <title>Project Overview</title>
+
+</head>
+<body>
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="index.html">Project Overview</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+  
+      <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav me-auto mb-2 mb-md-0">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="background.html" id="dropdown01" data-bs-toggle="dropdown" aria-expanded="false">Commodities Background</a>
+            <ul class="dropdown-menu" aria-labelledby="dropdown01">
+              <li><a class="dropdown-item" href="background.html">Metal Commodities</a></li>
+              <li><a class="dropdown-item" href="background.html#BackOutput">Global Output</a></li>
+              <li><a class="dropdown-item" href="background.html#BackPrice">Commodity Price</a></li>
+            </ul>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="time_analysis.html" id="dropdown01" data-bs-toggle="dropdown" aria-expanded="false">Time Analysis</a>
+            <ul class="dropdown-menu" aria-labelledby="dropdown01">
+              <li><a class="dropdown-item" href="time_analysis.html">Executive Summary</a></li>
+              <li><a class="dropdown-item" href="time_analysis.html#TimeReal">Real Price</a></li>
+              <li><a class="dropdown-item" href="time_analysis.html#TimeStationary">Data Stationary</a></li>
+              <li><a class="dropdown-item" href="time_analysis.html#TimeARIMA">ARIMA Modeling</a></li>
+              <li><a class="dropdown-item" href="time_analysis.html#TimeSummary">Metal Model Summaries</a></li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="machineLearn.html">Machine Learning</a>
+          </li>
+        </ul>
+        <form class="d-flex">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+      </div>
+    </div>
+  </nav>
+  
+  <main>
+  
+
+  <div class="container-fluid" style='margin:0'>
+    <div class="row headerBack justify-content-center">
+      <div class="col-12">
+        <h1>Commodity Price Prediction: <small>Comparing Autoregressive and Recurring Neural Network Models</small></h1>
+      </div><!-- /.col-lg-12 -->
+    </div><!-- /.row -->
+  </div><!-- /.container-fluid-->
+
+  <!-- Create Executive Summary -->
+  <div class="container executive">
+    <div class="row">
+      <div class="col-12">
+        <h2>Project and Model Goals</h2>
+        <p>
+            <b>The goal of this project</b> is to evaluate the effectiveness of a machine learning model, specifically one tailored to time series data, such as the Recurring 
+            Neural Network (RNN) model, for predicting commodity price fluctuations over a standard autoregressive model; this goal, from the outset, was influenced by the 
+            work of Welch &amp; Goyal (2008)<sup>1</sup> and follow-on efforts by Wang et al. (2020)<sup>2</sup>: in their work, Welch and Goyal attempt to characterize and 
+            summarize a variety of models for predicting excess returns via various economic and financial indicators such as dividend-price ratios, corporate bond yields, 
+            stock variance, etc.  In their comprehensive analysis, Welch and Goyal found limited, if any, success for these models in predicting in or out-of-sample returns 
+            from these economic and financial indicators, summarizing that <b>it may be possible to stumble upon a seemingly statistically significant model, but skepticism 
+            should be employed, as these models are not fundamentally robust</b>.  Wang et al. seem to have more success in index prediction via a series of technical rules 
+            that predict index changes based on trends of the index data itself, such as momentum of price gains, filtering for the precipice of a price gain or drop, etc.
+            <br><br>
+            This project attempts to synthesize and expand upon the work of Welch, Goyal, and Wang et al. by constructing a machine learning model that can utilize the 
+            economic and financial indicators investigated by Welch and Goyal and potentially find technical trends within the price or economic indicators over time.  A
+            <b>Recurring Neural Network (RNN)</b> is such a model.  RNNs, like any machine learning model, take in a series of data, typically as a multi-dimensional vector 
+            with a batch of features (economic indicators and price) over time, in this case encompassing a 3-rank tensor.  The weight of each feature at a specific time step 
+            is calculated by a series of forward and backward propagation methods that seek to lower the mean-square error (the 'loss' function) between the 1-month (or 
+            greater) forecasted commodity price and the actual commodity price.  This process is standard for any machine learning model; the RNN network additionally seeks 
+            to connect identify and exploit underlying trends with the data, analyazing the data as a whole in addition to separable data points.   <b>A trained RNN with a 
+            statistically-improved forecast of price over a generic random walk model is the goal</b>; the process for developing, testing, and comparing such a model, as 
+            well as additional insights into feature correlations, are presented in the following pages.
+        </p>
+      </div><!-- /.col-lg-12 -->
+    </div><!-- /.row -->
+  </div><!-- /.container executive -->
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h2>Project Introduction: Commodities under Review</h2>
+        <p>
+            The rationale for choosing <i>price</i> prediction in this report over <i>index</i> prediction, as attempted by Welch, Goyal, and Wang et al, was to more closely
+            utilize real-world effective data.  Index prediction is useful for economic, banking, and investment circles, but for certain commercial industries, financial or
+            industrial success is tied to the specific price of commodities, be they grain, oil, or other raw materials.  Index prediction is common within financial analysis 
+            literature, partly for its worth to certain industries, but also because index trends tend to be more stable, and thus predictable, compared to price trends.  
+            This follows from the nature of indices which are amalgamations of various commodites, for commodity indices, or stocks, for stock indices.  Flunctuations in 
+            price of a certain commodity or stock caused by isolated effects to that industry or corporation (such as news of a recent shortage in commodity supply or the 
+            revelation of a corporate scandal, respectively) do not overly effect the price of the index, so such muted fluctuations may fall with the prediction model error.  
+            <b>The potential limitations of price, versus index, prediction</b> will be evaluated in the conclusion of this report.
+            <br><br>
+            
+            <b>Raw metal price prediction</b> is advantageous for a number of industries that both produce and consume metals.  Of particular worth to a variety of industries 
+            and produced in a large global quantity are the following <b>five metal commodities</b> which shall be evaluated within this project:
+        </p>
+      </div><!-- /.col-lg-12 -->
+      <div class='d-flex justify-content-center'>
+        <table class="styled-table">
+            <thead>
+              <tr>
+                <th><b>Aluminum</b></th> <th><b>Copper</b></th> <th><b>Iron Ore/Steel</b></th> <th><b>Nickel</b></th> <th><b>Zinc</b></th>
+              </tr>
+            </thead>
+        </table>
+      </div><!-- /.d-flex -->
+      <div class="col-12">
+        <p><br>
+            Each of these commodities, including summaries of their industrial uses, global production, and recent price trends, are discussed in greater detail in the 
+            <b>Commodities Background Section</b>:
+        </p>
+      </div><!-- /.col-12 -->
+        <div class="d-flex justify-content-center">
+            <a class="btn btn-secondary" href="background.html">Commodities Background: &raquo;</a></p>
+        </div><!-- /.col-lg-12 -->
+    </div><!-- /.row -->
+  </div><!-- /.container executive -->
+  
+  <div class="container">
+      <!-- Three columns of text below the carousel -->
+      <div class="row">
+        <div class="col-lg-12 center">
+            <svg width="100%" height=5px>
+              <rect width="100%" height="100%" style="fill:rgb(10, 10, 10);stroke-width:3;stroke:rgb(0,0,0)" />
+            </svg>
+            <br><br>
+          </div><!-- /.col-lg-12 -->
+        <div class="col-lg-4 center">
+          <title>Rich Gude</title><img src='info/Me.jpg' style='width:140px; height:140px; border-radius: 50%; margin-left: auto; margin-right: auto; align-items: center'>
+  
+          <h2><small style="color:rgb(150, 150, 150);">Author:</small> Rich Gude</h2>
+          <p>Honestly, just a pretty cool guy, currently finishing a Masters Degree in Data Science from George Washington University.</p>
+          <p><a class="btn btn-secondary" href="https://github.com/RichGude">Learn More &raquo;</a></p>
+        </div><!-- /.col-lg-4 -->
+        <div class="col-lg-4 center">
+            <title>AMCharts</title><img src='info/amcharts.png' style='width:140px; height:140px; border-radius: 50%; margin-left: auto; margin-right: auto; align-items: center'>
+  
+          <h2>AM Charts</h2>
+          <p>Special thanks to the AMCHarts team for their amazing javascript libraries and demos edited and used within this project.</p>
+          <p><a class="btn btn-secondary" href="https://www.amcharts.com/">See Demos and More &raquo;</a></p>
+        </div><!-- /.col-lg-4 -->
+        <div class="col-lg-4 justify-content-center">
+            <title>Metals</title><img src='info/nickel.jpg' style='width:140px; height:140px; border-radius: 50%; margin-left: auto; margin-right: auto; align-items: center'>
+  
+          <h2>Metal Info</h2>
+          <p>Metal is just fascinating!  Learn more about each commodity above from the USGS:</p>
+          <p><a class="btn btn-secondary" href="https://www.usgs.gov/centers/nmic">View details &raquo;</a></p>
+        </div><!-- /.col-lg-4 -->
+      </div><!-- /.row -->
+    </div><!-- /.container -->
+  
+
+  <!-- FOOTER -->
+  <footer class="container-fluid footBox">
+    <p> References: <br>
+      1. Welch I. &amp; Goyal A. (2008) A Comprehensive Look at The Empirical Performance of Equity Premium Prediction. <i>The Review of Financial Studies</i>, v21n4,
+        1455-1508<br>
+      2. Wang Y., Liu L., &amp; Wu C. (2020).  Forecasting commodity prices out-of-sample: Can technical indicators help? <i>International Journal of Forecasting</i>,
+        36, 666–683
+    </p>
+    <p class="float-end"><a href="#">Back to top</a></p>
+    <p>&middot; Special Thanks to BootStrap 5.0.0 for Design CSS and HTML Outline &copy; Probably Them</p>
+  </footer>
+
+  </main><!-- /.container -->
+  
+  <!-- Load final scripting of Boostrap elements -->
+  <script src="assets/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- External JS libraries -->
+  <script src="js/d3.min.js"></script>
+
+</body>
+</html>
